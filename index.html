@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design With NS | Your Satisfaction is our Elevation</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body class="light-theme">
+
+    <!-- Sticky Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">NS</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="theme-toggle" id="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Design With NS</h1>
+            <p class="tagline">Your Satisfaction is our Elevation</p>
+            <div class="hero-btns">
+                <a href="#services" class="btn primary">Get Started</a>
+                <a href="#contact" class="btn secondary">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text" data-aos="fade-right">
+                    <h2 class="section-title">Elevating Creativity</h2>
+                    <p>At <strong>Design With NS</strong>, we believe that design is more than just visuals; it's about creating an experience. Our mission is to transform your ideas into premium, high-quality designs that resonate with your audience. From corporate branding to personal invitations, we ensure every pixel reflects excellence and every client achieves elevation.</p>
+                </div>
+                <div class="about-stats" data-aos="fade-left">
+                    <div class="stat-item">
+                        <h3>100%</h3>
+                        <p>Satisfaction</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>Premium</h3>
+                        <p>Quality</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title text-center" data-aos="fade-up">Our Expertise</h2>
+            <div class="services-grid">
+                <!-- Social Media -->
+                <div class="service-card" data-aos="zoom-in">
+                    <div class="icon-box"><i class="fas fa-hashtag"></i></div>
+                    <h3>Social Media</h3>
+                    <ul>
+                        <li>Instagram Posts, Reels & Stories</li>
+                        <li>Facebook Covers & Graphics</li>
+                        <li>YouTube Thumbnails & Art</li>
+                        <li>LinkedIn Banners</li>
+                    </ul>
+                </div>
+                <!-- Personal -->
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-box"><i class="fas fa-heart"></i></div>
+                    <h3>Personal & Lifestyle</h3>
+                    <ul>
+                        <li>Wedding & Party Invites</li>
+                        <li>Photo Albums & Collages</li>
+                        <li>Custom Calendars/Planners</li>
+                        <li>Modern Resume / CV</li>
+                    </ul>
+                </div>
+                <!-- Business -->
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="icon-box"><i class="fas fa-briefcase"></i></div>
+                    <h3>Business Branding</h3>
+                    <ul>
+                        <li>Logo & Full Brand Kits</li>
+                        <li>Premium Business Cards</li>
+                        <li>Corporate Brochures</li>
+                        <li>Posters & Flyers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info" data-aos="fade-right">
+                    <h2 class="section-title">Get in Touch</h2>
+                    <p>Ready to elevate your project? Reach out to us via any of the channels below.</p>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+91 9443128360</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>designwithns715@gmail.com</span>
+                    </div>
+                </div>
+                <form id="contactForm" class="contact-form" data-aos="fade-left">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" rows="5" placeholder="Project Details" required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary full-width">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/919443128360" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">NS</div>
+            <p>Elevating your vision through premium design.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+            <hr>
+            <p class="copyright">&copy; 2024 Design With NS. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
