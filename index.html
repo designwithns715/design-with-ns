@@ -13,7 +13,7 @@
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#home" class="logo-wrapper">
+            <a href="#home" class="logo-link">
                 <img src="assets/NS LOGO.png" alt="Design With NS Logo" class="nav-logo">
             </a>
             
@@ -21,13 +21,12 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li class="mobile-only-theme">
-                     <button class="theme-toggle-btn">Toggle Theme</button>
-                </li>
             </ul>
 
             <div class="nav-actions">
-                <div class="theme-toggle" id="theme-btn"><i class="fas fa-moon"></i></div>
+                <div class="theme-toggle" id="theme-btn">
+                    <i class="fas fa-moon"></i>
+                </div>
                 <div class="hamburger" id="hamburger">
                     <span></span><span></span><span></span>
                 </div>
@@ -36,11 +35,11 @@
     </nav>
 
     <section id="home" class="hero">
-        <div class="hero-content" data-aos="zoom-in">
+        <div class="hero-content" data-aos="zoom-out">
             <h1>Design With NS</h1>
             <p class="tagline">Your Satisfaction is our Elevation</p>
             <div class="hero-btns">
-                <a href="#services" class="btn primary">Start Designing</a>
+                <a href="#services" class="btn primary">View Services</a>
                 <a href="#contact" class="btn secondary">Hire Us</a>
             </div>
         </div>
@@ -48,23 +47,49 @@
 
     <section id="services" class="services">
         <div class="container">
-            <h2 class="section-title text-center" data-aos="fade-up">Premium Services</h2>
+            <h2 class="section-title text-center" data-aos="fade-up">Our Expertise</h2>
             <div class="services-grid">
                 <div class="service-card" data-aos="fade-up">
-                    <i class="fas fa-magic icon"></i>
+                    <i class="fas fa-hashtag icon"></i>
                     <h3>Social Media</h3>
-                    <p>Reels, YouTube Thumbnails, and LinkedIn Branding.</p>
+                    <p>Reels, YouTube Art, and LinkedIn Branding.</p>
                 </div>
                 <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-pen-nib icon"></i>
+                    <i class="fas fa-heart icon"></i>
                     <h3>Lifestyle</h3>
-                    <p>Wedding Cards, Resumes, and Personal Planners.</p>
+                    <p>Wedding Cards, Resumes, and Photo Albums.</p>
                 </div>
                 <div class="service-card" data-aos="fade-up" data-aos-delay="200">
                     <i class="fas fa-briefcase icon"></i>
                     <h3>Business</h3>
-                    <p>Logo Kits, Brochures, and Corporate Identity.</p>
+                    <p>Logo Kits, Brochures, and Business Cards.</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info" data-aos="fade-right">
+                    <h2 class="section-title">Elevate Your Brand</h2>
+                    <p>Send a message and let's start creating.</p>
+                    <div class="info-item"><i class="fas fa-phone"></i> +91 9443128360</div>
+                    <div class="info-item"><i class="fas fa-envelope"></i> designwithns715@gmail.com</div>
+                </div>
+
+                <form id="contactForm" class="contact-form" data-aos="fade-left">
+                    <div class="form-group">
+                        <input type="text" id="name" placeholder="Full Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" rows="5" placeholder="Project Details..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn primary full-width">Send Message</button>
+                </form>
             </div>
         </div>
     </section>
@@ -72,9 +97,18 @@
     <footer class="footer">
         <div class="container">
             <img src="assets/NS LOGO.png" alt="NS Logo" class="footer-logo">
-            <p>&copy; 2026 Design With NS. Elevating Vision.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/919443128360"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p>&copy; 2026 Design With NS. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <a href="https://wa.me/919443128360" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
