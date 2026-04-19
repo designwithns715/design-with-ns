@@ -1,14 +1,12 @@
 AOS.init({ duration: 1000, once: true });
 
-// Mobile Menu
-const hamburger = document.getElementById('hamburger');
-const navMenu = document.getElementById('nav-menu');
-
-hamburger.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+// UI Feature: Navbar Scroll Blur
+window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.navbar');
+    nav.style.boxShadow = window.scrollY > 50 ? '0 10px 30px rgba(0,0,0,0.05)' : 'none';
 });
 
-// Theme Toggle
+// UX Fix: Persistent Theme
 const themeBtn = document.getElementById('theme-btn');
 const body = document.body;
 
@@ -26,15 +24,15 @@ themeBtn.addEventListener('click', () => {
     isDark ? icon.classList.replace('fa-moon', 'fa-sun') : icon.classList.replace('fa-sun', 'fa-moon');
 });
 
-// FORM SUBMISSION (Links to your Google Sheet)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwjoapUVfDYXTwIQn0k_nY7cs_JOdCqpo68hYPijbazBxbVZUP1bmr2BpW6RYjD-_eF4Q/exec'; // Replace this with your URL!
+// PRESERVING YOUR OLD FORM SUBMISSION LOGIC
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyEPvVsPh9zcIBRNAa9wZBR0Ed0gxpobK5EnvGhLKSwKhldByzPkjS4Hbh8y632zzhqcA/exec';
 const contactForm = document.getElementById('contactForm');
 
 contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = contactForm.querySelector('button');
     btn.disabled = true;
-    btn.innerText = "Elevating Message...";
+    btn.innerText = "Processing...";
 
     const formData = {
         name: document.getElementById('name').value,
@@ -46,15 +44,14 @@ contactForm.addEventListener('submit', async (e) => {
         await fetch(scriptURL, {
             method: 'POST',
             mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
         });
-        alert("Success! Your message has reached Design With NS.");
+        alert("Success! Design With NS has received your inquiry.");
         contactForm.reset();
-    } catch (error) {
-        alert("Error sending message. Please try WhatsApp!");
+    } catch (err) {
+        alert("Submission failed. Please reach out via WhatsApp.");
     } finally {
         btn.disabled = false;
-        btn.innerText = "Send Message";
+        btn.innerText = "Submit Inquiry";
     }
 });
