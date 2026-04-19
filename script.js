@@ -59,13 +59,13 @@ contactForm.addEventListener('submit', async (e) => {
         return;
     }
 
-    // Example of sending to Google Sheets via Fetch
+    // Example of sending to Google Sheets via Fetchb
     // Replace YOUR_WEB_APP_URL with your actual Google Apps Script URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbx9zZcbCtdRHXfQM886bc37sc0BAAAph7vQEBUOhm7_VYekd3GZHnc4ytUIQBmGK8RJ/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbytdgsMLex_pU8wtM89AXuRkcz-4oSY6D3hqBN3agGYZrnaKIhEVI5UExhEKHDM48Pq2g/exec';
     
     try {
         // If you don't have the script set up yet, we'll just simulate success
-        if (scriptURL === 'YOUR_WEB_APP_URL') {
+        if (scriptURL === 'https://script.google.com/macros/s/AKfycbytdgsMLex_pU8wtM89AXuRkcz-4oSY6D3hqBN3agGYZrnaKIhEVI5UExhEKHDM48Pq2g/exec') {
             console.log("Form Data:", { name, email, message });
             alert("Form submitted successfully! (Simulation mode - configure your Apps Script URL in script.js to save data)");
             contactForm.reset();
