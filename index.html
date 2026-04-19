@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design With NS | Premium Design Services</title>
+    <title>Design With NS | Your Satisfaction is our Elevation</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 
     <nav class="navbar">
         <div class="nav-container">
-            <a href="#home" class="logo-link">
+            <a href="#home" class="logo-wrapper">
                 <img src="assets/NS LOGO.png" alt="Design With NS Logo" class="nav-logo">
             </a>
             
@@ -21,12 +21,13 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li class="mobile-only-theme">
+                     <button class="theme-toggle-btn">Toggle Theme</button>
+                </li>
             </ul>
 
             <div class="nav-actions">
-                <div class="theme-toggle" id="theme-btn">
-                    <i class="fas fa-moon"></i>
-                </div>
+                <div class="theme-toggle" id="theme-btn"><i class="fas fa-moon"></i></div>
                 <div class="hamburger" id="hamburger">
                     <span></span><span></span><span></span>
                 </div>
@@ -35,11 +36,11 @@
     </nav>
 
     <section id="home" class="hero">
-        <div class="hero-content" data-aos="fade-up">
+        <div class="hero-content" data-aos="zoom-in">
             <h1>Design With NS</h1>
             <p class="tagline">Your Satisfaction is our Elevation</p>
             <div class="hero-btns">
-                <a href="#services" class="btn primary">View Services</a>
+                <a href="#services" class="btn primary">Start Designing</a>
                 <a href="#contact" class="btn secondary">Hire Us</a>
             </div>
         </div>
@@ -47,22 +48,22 @@
 
     <section id="services" class="services">
         <div class="container">
-            <h2 class="section-title text-center" data-aos="fade-up">Elevated Services</h2>
+            <h2 class="section-title text-center" data-aos="fade-up">Premium Services</h2>
             <div class="services-grid">
                 <div class="service-card" data-aos="fade-up">
-                    <i class="fas fa-hashtag icon"></i>
+                    <i class="fas fa-magic icon"></i>
                     <h3>Social Media</h3>
-                    <p>Reels, Posts, YouTube Art, and LinkedIn Branding.</p>
+                    <p>Reels, YouTube Thumbnails, and LinkedIn Branding.</p>
                 </div>
                 <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-gem icon"></i>
+                    <i class="fas fa-pen-nib icon"></i>
                     <h3>Lifestyle</h3>
-                    <p>Wedding Cards, Premium Resumes, and Photo Collages.</p>
+                    <p>Wedding Cards, Resumes, and Personal Planners.</p>
                 </div>
                 <div class="service-card" data-aos="fade-up" data-aos-delay="200">
                     <i class="fas fa-briefcase icon"></i>
                     <h3>Business</h3>
-                    <p>Logos, Brand Kits, Brochures, and Business Cards.</p>
+                    <p>Logo Kits, Brochures, and Corporate Identity.</p>
                 </div>
             </div>
         </div>
@@ -71,11 +72,7 @@
     <footer class="footer">
         <div class="container">
             <img src="assets/NS LOGO.png" alt="NS Logo" class="footer-logo">
-            <div class="social-links">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/919443128360"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            <p>&copy; 2026 Design With NS. All Rights Reserved.</p>
+            <p>&copy; 2026 Design With NS. Elevating Vision.</p>
         </div>
     </footer>
 
