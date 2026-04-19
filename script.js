@@ -1,19 +1,22 @@
-// Initialize AOS
+/**
+ * Design With NS - Main Website Script
+ */
+
+// 1. Initialize Scroll Animations
 AOS.init({
     duration: 1000,
     once: true,
     offset: 100
 });
 
-// Theme Toggle
+// 2. Theme Toggle Logic
 const themeBtn = document.getElementById('theme-btn');
 const body = document.body;
 
-// Check for saved theme
-const currentTheme = localStorage.getItem('theme');
-if (currentTheme) {
-    body.classList.add(currentTheme);
-    if (currentTheme === 'dark-theme') {
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+    body.classList.add(savedTheme);
+    if (savedTheme === 'dark-theme') {
         themeBtn.querySelector('i').classList.replace('fa-moon', 'fa-sun');
     }
 }
@@ -21,7 +24,6 @@ if (currentTheme) {
 themeBtn.addEventListener('click', () => {
     body.classList.toggle('dark-theme');
     const icon = themeBtn.querySelector('i');
-    
     if (body.classList.contains('dark-theme')) {
         icon.classList.replace('fa-moon', 'fa-sun');
         localStorage.setItem('theme', 'dark-theme');
@@ -31,7 +33,7 @@ themeBtn.addEventListener('click', () => {
     }
 });
 
-// Navbar Scroll Effect
+// 3. Navbar Styling on Scroll
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
@@ -43,52 +45,48 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Contact Form Validation & Submission
+// 4. SECURE FORM SUBMISSION
+// PASTE YOUR NEW DEPLOYMENT URL BELOW
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxZNxqzYUW7x8LkiYI6DsjrQIu48oldgEqzJLvUTFEPSEQFNvn1ugRamP9cXp9X2evUBQ/exec';
+
 const contactForm = document.getElementById('contactForm');
 
 contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+    const submitBtn = contactForm.querySelector('button');
+    submitBtn.innerText = "Elevating...";
+    submitBtn.disabled = true;
 
-    // Basic Validation
-    if (!name || !email || !message) {
-        alert("Please fill in all fields.");
-        return;
-    }
+    const formData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        message: document.getElementById('message').value
+    };
 
-    // Example of sending to Google Sheets via Fetchb
-    // Replace YOUR_WEB_APP_URL with your actual Google Apps Script URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbytdgsMLex_pU8wtM89AXuRkcz-4oSY6D3hqBN3agGYZrnaKIhEVI5UExhEKHDM48Pq2g/exec';
-    
     try {
-        // If you don't have the script set up yet, we'll just simulate success
-        if (scriptURL === 'https://script.google.com/macros/s/AKfycbytdgsMLex_pU8wtM89AXuRkcz-4oSY6D3hqBN3agGYZrnaKIhEVI5UExhEKHDM48Pq2g/exec') {
-            console.log("Form Data:", { name, email, message });
-            alert("Form submitted successfully! (Simulation mode - configure your Apps Script URL in script.js to save data)");
-            contactForm.reset();
-            return;
-        }
-
-        const response = await fetch(scriptURL, {
+        await fetch(scriptURL, {
             method: 'POST',
-            body: JSON.stringify({ name, email, message }),
-            headers: { 'Content-Type': 'application/json' }
+            mode: 'no-cors', // Essential for Google Apps Script
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
         });
 
-        if (response.ok) {
-            alert("Thank you! Your message has been sent.");
-            contactForm.reset();
-        }
+        // Since no-cors doesn't return a readable response, we trigger success on completion
+        alert("Success! Your details have been sent to Design With NS.");
+        contactForm.reset();
+
     } catch (error) {
         console.error('Error!', error.message);
-        alert("Something went wrong. Please try again.");
+        alert("Submission failed. Please try again or message via WhatsApp.");
+    } finally {
+        submitBtn.innerText = "Send Message";
+        submitBtn.disabled = false;
     }
 });
 
-// Smooth scrolling for navigation links
+// 5. Smooth Scroll for Navigation
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
