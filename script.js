@@ -72,7 +72,7 @@ themeBtn.addEventListener('click', () => {
 });
 
 // 4. Form Submission to Google Sheet (Secure ID Version)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbz_PUT_YOUR_EXEC_URL_HERE/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwBdbL04_JPR7aVVDuF1-atTdYyXwhvTVOjl1iAdnC8wKZU2u4XdEuXmExuIbw6w7PizQ/exec';
 const contactForm = document.getElementById('contactForm');
 
 contactForm.addEventListener('submit', async (e) => {
