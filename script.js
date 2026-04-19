@@ -11,7 +11,7 @@ themeBtn.addEventListener('click', () => {
 });
 
 // Replace with your Google Apps Script URL
-const scriptURL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyUtsawjN29J7Ft-6-E_teUB2TEqQfjZDqW2HEv4_6MGUzJw59sHSNx0C-MUNdQOkzxKw/exec';
 const contactForm = document.getElementById('contactForm');
 
 contactForm.addEventListener('submit', async (e) => {
