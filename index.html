@@ -400,6 +400,14 @@ footer strong{color:var(--green)}
 }
 
 /* ═══════════════════════════════════════════
+   THEME LOGO SWITCHING
+═══════════════════════════════════════════ */
+.logo-dark{display:block}
+.logo-light{display:none}
+[data-theme="light"] .logo-dark{display:none}
+[data-theme="light"] .logo-light{display:block}
+
+/* ═══════════════════════════════════════════
    RESPONSIVE — SMALL MOBILE ≤480px
 ═══════════════════════════════════════════ */
 @media(max-width:480px){
@@ -415,7 +423,8 @@ footer strong{color:var(--green)}
 <!-- ════════════ NAV ════════════ -->
 <nav id="mainNav">
   <a href="#home" class="nav-logo">
-    <img src="Design_With_NS_Logo.png" alt="Design With NS" />
+    <img src="Design_With_NS_Logo_Dark.png" alt="Design With NS" class="logo-dark" />
+    <img src="Design_With_NS_Logo.png"      alt="Design With NS" class="logo-light" />
     <div class="nav-brand">Design With <span>NS</span></div>
   </a>
 
@@ -578,7 +587,8 @@ footer strong{color:var(--green)}
 <section id="about">
   <div class="about-inner">
     <div class="about-visual reveal-l">
-      <img src="Design_With_NS_Logo.png" alt="Design With NS Logo" />
+      <img src="Design_With_NS_Logo_Dark.png" alt="Design With NS Logo" class="logo-dark" />
+      <img src="Design_With_NS_Logo.png"      alt="Design With NS Logo" class="logo-light" />
     </div>
     <div class="reveal-r">
       <div class="section-label">About Us</div>
