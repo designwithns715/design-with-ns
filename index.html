@@ -64,18 +64,17 @@
             border-bottom: 1px solid var(--border); transition: var(--tt);
         }
         .nav-logo { display: flex; align-items: center; gap: 12px; }
-        .nav-logo-img { height: 42px; width: auto; border-radius: 6px; transition: opacity 0.3s ease; }
+        .nav-logo-img { height: 42px; width: auto; border-radius: 6px; }
         .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text-h); }
         .nav-brand span { color: var(--green); }
         
         .nav-links { display: flex; gap: 30px; }
         .nav-links a { color: var(--text-muted); font-size: .88rem; font-weight: 500; transition: color .2s; position: relative; }
         .nav-links a:hover { color: var(--green); }
-        .nav-links a::after { content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px; background:var(--green); transition:width .3s; }
-        .nav-links a:hover::after { width:100%; }
 
         .nav-right { display: flex; align-items: center; gap: 15px; }
-        .theme-toggle { width: 38px; height: 38px; border-radius: 50%; background: var(--bg-card); display: flex; align-items: center; justify-content: center; color: var(--text-h); transition: transform .2s; }
+        .theme-toggle { width: 38px; height: 38px; border-radius: 50%; background: var(--bg-card); display: flex; align-items: center; justify-content: center; color: var(--text-h); border: 1px solid var(--border-soft); transition: transform 0.2s; }
+        .theme-toggle:hover { transform: rotate(15deg); }
         .theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; }
         .i-sun, .i-moon { display: none; }
         [data-theme="dark"] .i-moon { display: block; }
@@ -90,7 +89,14 @@
         .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--text-h); margin-bottom: 15px; }
         .section-sub { color: var(--text-muted); max-width: 600px; margin: 0 auto; }
 
-        /* ════════════ RESUME SECTION STYLES ════════════ */
+        /* Hero Section */
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; background: #040f26; transition: var(--tt); }
+        [data-theme="light"] .hero { background: linear-gradient(135deg, #0d2d6b 0%, #163580 50%, #1e48a8 100%); }
+        .hero-content { z-index: 10; max-width: 800px; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 5rem); color: #fff; line-height: 1.1; margin-bottom: 15px; }
+        .hero h1 span { color: var(--green); }
+
+        /* ════════════ RESUME SECTION ════════════ */
         #resume {
             background: linear-gradient(135deg, #040f26 0%, #0d2d6b 100%);
             text-align: center; position: relative; overflow: hidden;
@@ -106,12 +112,12 @@
         .r-feat { display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .r-feat-icon {
             width: 54px; height: 54px; border-radius: 13px;
-            background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
             display: flex; align-items: center; justify-content: center; transition: all .3s;
         }
         .r-feat:hover .r-feat-icon { background: rgba(90,200,60,.2); border-color: var(--green); transform: translateY(-4px); }
         .r-feat-icon svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2; }
-        .r-feat span { font-size: .83rem; font-weight: 500; color: rgba(255,255,255,.58); letter-spacing: .03em; }
+        .r-feat span { font-size: .83rem; font-weight: 500; color: rgba(255,255,255,0.58); letter-spacing: .03em; }
 
         .btn-resume {
             display: inline-flex; align-items: center; gap: 10px;
@@ -120,17 +126,19 @@
             font-weight: 700; letter-spacing: .05em;
             box-shadow: 0 6px 28px var(--green-glow); transition: all .22s;
         }
-        .btn-resume:hover { background: var(--green-hover); transform: translateY(-3px); box-shadow: 0 12px 36px rgba(90,200,60,.55); }
-        .btn-resume svg { width: 19px; height: 19px; stroke: #081a42; fill: none; stroke-width: 2.2; }
+        .btn-resume:hover { background: var(--green-hover); transform: translateY(-3px); }
 
         /* Reveal Animations */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
+        .stagger .reveal:nth-child(1) { transition-delay: 0.1s; }
+        .stagger .reveal:nth-child(2) { transition-delay: 0.2s; }
+        .stagger .reveal:nth-child(3) { transition-delay: 0.3s; }
+        .stagger .reveal:nth-child(4) { transition-delay: 0.4s; }
 
         @media (max-width: 768px) {
             .nav-links, .nav-cta { display: none; }
-            .about-inner { grid-template-columns: 1fr; }
-            .resume-features { gap: 20px; }
+            section { padding: 60px 5%; }
         }
     </style>
 </head>
@@ -141,14 +149,12 @@
         <img src="Design_With_NS_Logo_Dark.png" alt="Design With NS" id="siteLogo" class="nav-logo-img" />
         <div class="nav-brand">Design With <span>NS</span></div>
     </a>
-
     <ul class="nav-links">
         <li><a href="#services">Services</a></li>
         <li><a href="#resume">Resume</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#quote">Contact</a></li>
     </ul>
-
     <div class="nav-right">
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
             <svg class="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -158,9 +164,14 @@
     </div>
 </nav>
 
-<!-- HERO & SERVICES SECTIONS REMAIN AS PREVIOUSLY DEFINED -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <div class="hero-eyebrow">Professional Graphic Design</div>
+        <h1>Design With <span>NS</span></h1>
+        <p class="hero-tagline">Your Satisfaction is our Elevation</p>
+    </div>
+</section>
 
-<!-- ════════════ RESUME SECTION ════════════ -->
 <section id="resume">
     <div style="position:relative;z-index:2">
       <div class="section-label reveal">Career Tools</div>
@@ -168,43 +179,29 @@
       <p class="section-sub reveal" style="margin:0 auto 46px; color:rgba(255,255,255,0.7);">
         Stand out with a professionally crafted resume that gets you noticed. Tell us about yourself and we'll handle the rest.
       </p>
-  
-      <div class="resume-features">
+      <div class="resume-features stagger">
         <div class="r-feat reveal">
-          <div class="r-feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg>
-          </div>
+          <div class="r-feat-icon"><svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg></div>
           <span>Custom Design</span>
         </div>
         <div class="r-feat reveal">
-          <div class="r-feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          </div>
+          <div class="r-feat-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
           <span>ATS-Friendly</span>
         </div>
         <div class="r-feat reveal">
-          <div class="r-feat-icon">
-            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          </div>
+          <div class="r-feat-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
           <span>Quick Turnaround</span>
         </div>
         <div class="r-feat reveal">
-          <div class="r-feat-icon">
-            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
+          <div class="r-feat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
           <span>All Industries</span>
         </div>
       </div>
-  
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScu3TdtbRWjVq7Zvr9dYx7VO1sENXJidSBub2mKws3Nh28nWQ/viewform?usp=sharing&ouid=104419270268078942259"
-         target="_blank" rel="noopener" class="btn-resume reveal">
-        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScu3TdtbRWjVq7Zvr9dYx7VO1sENXJidSBub2mKws3Nh28nWQ/viewform?usp=sharing" target="_blank" class="btn-resume reveal">
         Get Your Resume
       </a>
     </div>
 </section>
-
-<!-- ABOUT, QUOTE & FOOTER SECTIONS REMAIN AS PREVIOUSLY DEFINED -->
 
 <script>
     const themeToggle = document.getElementById('themeToggle');
@@ -226,15 +223,21 @@
         updateLogo(newTheme);
     });
 
+    // Theme initialization
     const savedTheme = localStorage.getItem('dns-theme') || 'dark';
     html.setAttribute('data-theme', savedTheme);
     updateLogo(savedTheme);
 
+    // Optimized Scroll Reveal Observer
+    const observerOptions = { threshold: 0.15 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
         });
-    }, { threshold: 0.1 });
+    }, observerOptions);
+
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 </body>
