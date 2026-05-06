@@ -1,98 +1,358 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design With NS | Elevated Visuals</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Design With NS – Your Satisfaction is our Elevation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+    <style>
+        /* ═══════════════════════════════════════════
+           THEME TOKENS & VARIABLES
+        ═══════════════════════════════════════════ */
+        :root {
+            --green: #5ac83c;
+            --green-hover: #6edc4f;
+            --green-glow: rgba(90, 200, 60, .35);
+            --tt: background .35s ease, color .35s ease, border-color .35s ease, box-shadow .35s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg: #040f26;
+            --bg-section: #081a42;
+            --bg-card: #0d2244;
+            --bg-alt: #0a1c3a;
+            --navy-mid: #163580;
+            --border: rgba(90, 200, 60, .18);
+            --border-soft: rgba(255, 255, 255, .09);
+            --text-h: #ffffff;
+            --text-body: #c8d3e8;
+            --text-muted: #7a8eaf;
+            --nav-bg: rgba(4, 15, 38, .93);
+            --shadow: 0 20px 56px rgba(0, 0, 0, .55);
+        }
+
+        [data-theme="light"] {
+            --bg: #f4f6fb;
+            --bg-section: #ffffff;
+            --bg-card: #eef2fb;
+            --bg-alt: #e6eef8;
+            --navy-mid: #163580;
+            --border: rgba(13, 45, 107, .16);
+            --border-soft: rgba(13, 45, 107, .1);
+            --text-h: #0d2d6b;
+            --text-body: #334466;
+            --text-muted: #6a7fa0;
+            --nav-bg: rgba(244, 246, 251, .93);
+            --shadow: 0 20px 56px rgba(13, 45, 107, .1);
+        }
+
+        /* ── Reset ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-body); overflow-x: hidden; transition: var(--tt); }
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; }
+
+        /* ════════════ NAV ════════════ */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 5%; height: 70px;
+            background: var(--nav-bg); backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border); transition: var(--tt);
+        }
+        .nav-logo { display: flex; align-items: center; gap: 12px; }
+        .nav-logo-img { height: 42px; width: auto; border-radius: 6px; transition: opacity 0.3s ease; }
+        .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text-h); }
+        .nav-brand span { color: var(--green); }
+        
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: var(--text-muted); font-size: .88rem; font-weight: 500; transition: color .2s; position: relative; }
+        .nav-links a:hover { color: var(--green); }
+        .nav-links a::after { content:''; position:absolute; bottom:-5px; left:0; width:0; height:2px; background:var(--green); transition:width .3s; }
+        .nav-links a:hover::after { width:100%; }
+
+        .nav-right { display: flex; align-items: center; gap: 15px; }
+        .theme-toggle { width: 38px; height: 38px; border-radius: 50%; background: var(--bg-card); display: flex; align-items: center; justify-content: center; color: var(--text-h); cursor: pointer; border: 1px solid var(--border-soft); transition: transform .2s; }
+        .theme-toggle:hover { transform: rotate(15deg); color: var(--green); }
+        .theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .i-sun, .i-moon { display: none; }
+        [data-theme="dark"] .i-moon { display: block; }
+        [data-theme="light"] .i-sun { display: block; }
+
+        .nav-cta { background: var(--green); color: #040f26; padding: 10px 22px; border-radius: 5px; font-weight: 700; font-size: 0.85rem; transition: 0.3s; }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 5px 15px var(--green-glow); }
+
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .hamburger span { width: 22px; height: 2px; background: var(--text-h); border-radius: 2px; }
+
+        /* ════════════ HERO ════════════ */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 0 5%; position: relative; overflow: hidden;
+            background: #040f26; transition: var(--tt);
+        }
+        [data-theme="light"] .hero { background: linear-gradient(135deg, #0d2d6b 0%, #163580 50%, #1e48a8 100%); }
+        .hero-particles { position: absolute; inset: 0; pointer-events: none; }
+        .hero-content { z-index: 10; max-width: 800px; }
+        .hero-eyebrow { color: var(--green); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 20px; display: inline-block; padding: 5px 18px; border: 1px solid var(--green); border-radius: 20px; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 5rem); color: #fff; line-height: 1.1; margin-bottom: 15px; }
+        .hero h1 span { color: var(--green); }
+        .hero-tagline { font-size: 1.2rem; color: rgba(255,255,255,0.75); font-style: italic; font-weight: 300; margin-bottom: 40px; }
+
+        .btn-primary, .btn-outline { padding: 15px 35px; border-radius: 5px; font-weight: 700; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+        .btn-primary { background: var(--green); color: #040f26; box-shadow: 0 4px 20px var(--green-glow); }
+        .btn-outline { border: 2px solid rgba(255,255,255,0.3); color: #fff; margin-left: 10px; }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 25px var(--green-glow); }
+        .btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+        /* ════════════ SERVICES ════════════ */
+        section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-label { color: var(--green); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; display: block; margin-bottom: 10px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--text-h); margin-bottom: 15px; transition: color .35s; }
+        .section-sub { color: var(--text-muted); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 26px; }
+        .service-card { background: var(--bg-card); padding: 40px; border-radius: 14px; border: 1px solid var(--border-soft); transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .service-card:hover { transform: translateY(-10px); border-color: var(--green); box-shadow: var(--shadow); }
+        .service-card::after { content:''; position:absolute; bottom:0; left:0; width:0; height:3px; background: var(--green); transition: width 0.4s; }
+        .service-card:hover::after { width: 100%; }
+        
+        .svc-icon { width: 50px; height: 50px; background: rgba(90, 200, 60, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--green); border: 1px solid var(--border); transition: transform 0.3s; }
+        .service-card:hover .svc-icon { transform: scale(1.1) rotate(-5deg); }
+        .svc-icon svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; }
+        
+        .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--text-h); margin-bottom: 15px; border-bottom: 1px solid var(--border-soft); padding-bottom: 10px; }
+        .service-list li { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px; display: flex; gap: 10px; align-items: flex-start; }
+        .service-list li::before { content: '→'; color: var(--green); font-weight: bold; }
+
+        /* ════════════ ABOUT ════════════ */
+        .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .about-visual { background: var(--bg-section); padding: 50px; border-radius: 18px; border: 1px solid var(--border); display: flex; justify-content: center; }
+        .about-visual img { width: 70%; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2)); }
+        .about-stats { display: flex; gap: 40px; margin-top: 30px; }
+        .stat-num { font-family: 'Playfair Display', serif; font-size: 2.3rem; color: var(--text-h); font-weight: 900; }
+        .stat-num span { color: var(--green); }
+        .stat-label { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* ════════════ FORM ════════════ */
+        .quote-wrap { max-width: 700px; margin: 0 auto; background: var(--bg-card); padding: 50px; border-radius: 18px; border: 1px solid var(--border-soft); box-shadow: var(--shadow); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .form-grid .full { grid-column: span 2; }
+        .fg { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .fg label { font-size: 0.75rem; font-weight: 700; color: var(--text-h); text-transform: uppercase; letter-spacing: 0.5px; }
+        .fg input, .fg select, .fg textarea { background: var(--bg); border: 1px solid var(--border-soft); padding: 12px; border-radius: 8px; color: var(--text-h); font-family: inherit; transition: border 0.3s; }
+        .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--green); outline: none; box-shadow: 0 0 0 3px rgba(90, 200, 60, 0.1); }
+        .btn-quote { width: 100%; background: #081a42; color: #fff; padding: 15px; border-radius: 8px; font-weight: 700; font-size: 1rem; border: none; cursor: pointer; transition: 0.3s; display: flex; justify-content: center; gap: 10px; }
+        [data-theme="light"] .btn-quote { background: #163580; }
+        .btn-quote:hover { background: var(--green); color: #040f26; transform: translateY(-2px); }
+
+        /* ════════════ FOOTER ════════════ */
+        footer { background: #020a1a; color: var(--text-muted); text-align: center; padding: 30px 5%; font-size: 0.8rem; border-top: 1px solid var(--border-soft); }
+        footer strong { color: var(--green); }
+
+        /* ── Floating Particles ── */
+        @keyframes floatDot {
+            0% { transform: translateY(105vh) scale(0); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* ── Reveal Animations ── */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta { display: none; }
+            .hamburger { display: flex; }
+            .about-inner, .form-grid { grid-template-columns: 1fr; }
+            .form-grid .full { grid-column: span 1; }
+            .btn-outline { margin-left: 0; margin-top: 10px; width: 100%; justify-content: center; }
+            .btn-primary { width: 100%; justify-content: center; }
+            section { padding: 70px 5%; }
+        }
+    </style>
 </head>
-<body class="light-theme">
+<body>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#home"><img src="assets/NS LOGO.png" alt="Logo" class="nav-logo"></a>
-            
-            <ul class="nav-links" id="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#services">Expertise</a></li>
-                <li><a href="#contact">Contact</a></li>
+<nav id="mainNav">
+    <a href="#home" class="nav-logo">
+        <!-- Logo automatically swaps between navy (light) and white (dark)[cite: 1, 2] -->
+        <img src="Design_With_NS_Logo_Dark.png" alt="Design With NS" id="siteLogo" class="nav-logo-img" />
+        <div class="nav-brand">Design With <span>NS</span></div>
+    </a>
+
+    <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#quote">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+            <svg class="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <a href="#quote" class="nav-cta">Get a Quote</a>
+        <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-content">
+        <div class="hero-eyebrow">Professional Graphic Design</div>
+        <h1>Design With <span>NS</span></h1>
+        <p class="hero-tagline">Your Satisfaction is our Elevation</p>
+        <div class="hero-actions">
+            <a href="#services" class="btn-primary">Explore Services</a>
+            <a href="#quote" class="btn-outline">Contact Me</a>
+        </div>
+    </div>
+</section>
+
+<section id="services">
+    <div class="section-header reveal">
+        <span class="section-label">What We Offer</span>
+        <h2 class="section-title">Our Expertise</h2>
+        <p class="section-sub">From modern social media creatives to full business branding — we design with purpose and precision.</p>
+    </div>
+    <div class="services-grid">
+        <div class="service-card reveal">
+            <div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+            <h3>Social Media</h3>
+            <ul class="service-list">
+                <li>Instagram Reels & Posts</li>
+                <li>Facebook Covers & Content</li>
+                <li>YouTube Art & Thumbnails</li>
+                <li>LinkedIn Professional Banners</li>
             </ul>
+        </div>
+        <div class="service-card reveal">
+            <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <h3>Personal & Lifestyle</h3>
+            <ul class="service-list">
+                <li>Wedding & Party Invitations</li>
+                <li>Custom Photo Collages</li>
+                <li>Professional Resume/CV Design</li>
+                <li>Digital Planners & Calendars</li>
+            </ul>
+        </div>
+        <div class="service-card reveal">
+            <div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+            <h3>Business Branding</h3>
+            <ul class="service-list">
+                <li>Logos & Brand Identity</li>
+                <li>Modern Business Cards</li>
+                <li>Brochures & Flyers</li>
+                <li>Corporate Presentations</li>
+            </ul>
+        </div>
+    </div>
+</section>
 
-            <div class="nav-actions">
-                <div class="theme-toggle" id="theme-btn"><i class="fas fa-moon"></i></div>
-                <div class="hamburger" id="hamburger">
-                    <span></span><span></span><span></span>
-                </div>
+<section id="about">
+    <div class="about-inner">
+        <div class="about-visual reveal">
+            <img src="Design_With_NS_Logo.png" alt="About Logo" />
+        </div>
+        <div class="about-content reveal">
+            <span class="section-label">About the Studio</span>
+            <h2 class="section-title">Creativity Meets Craftsmanship</h2>
+            <p class="section-sub">Dedicated to turning vision into reality through high-impact design. We prioritize your brand's story to ensure your message speaks louder than words.</p>
+            <div class="about-stats">
+                <div><div class="stat-num">100<span>%</span></div><div class="stat-label">Satisfaction</div></div>
+                <div><div class="stat-num">24<span>/7</span></div><div class="stat-label">Support</div></div>
             </div>
         </div>
-    </nav>
+    </div>
+</section>
 
-    <section id="home" class="hero">
-        <div class="hero-content" data-aos="fade-up">
-            <span class="hero-label">Your Satisfaction is our Elevation</span>
-            <h1>Design With NS</h1>
-            <div class="hero-btns">
-                <a href="#services" class="btn btn-primary">Our Services</a>
-                <a href="#contact" class="btn btn-outline">Start Project</a>
+<section id="quote">
+    <div class="quote-wrap reveal">
+        <div class="section-header">
+            <h2 class="section-title">Get a Custom Quote</h2>
+            <p class="section-sub">Tell us about your project and we'll send a proposal within 24 hours.</p>
+        </div>
+        <!-- SECURE FORM: Replace scriptURL in JS to connect to Google Sheets[cite: 1] -->
+        <form id="quoteForm">
+            <div class="form-grid">
+                <div class="fg"><label>Full Name</label><input type="text" id="fname" placeholder="Your Name" required /></div>
+                <div class="fg"><label>Email Address</label><input type="email" id="femail" placeholder="you@example.com" required /></div>
+                <div class="fg full"><label>Service Required</label>
+                    <select id="fservice" required>
+                        <option value="">Select a service...</option>
+                        <option>Social Media Bundle</option>
+                        <option>Logo & Branding Kit</option>
+                        <option>Invitations & Lifestyle</option>
+                        <option>Resume Design</option>
+                    </select>
+                </div>
+                <div class="fg full"><label>Project Details</label><textarea id="fmessage" rows="4" placeholder="Briefly describe your requirements..."></textarea></div>
             </div>
-        </div>
-    </section>
+            <button type="submit" class="btn-quote">Send Request</button>
+        </form>
+    </div>
+</section>
 
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title text-center" data-aos="fade-up">Creative Solutions</h2>
-            <div class="services-grid">
-                <div class="glass-card" data-aos="fade-up">
-                    <div class="card-icon"><i class="fas fa-layer-group"></i></div>
-                    <h3>Social Media</h3>
-                    <p>Reels, YouTube Art, and LinkedIn Graphics built for high engagement.</p>
-                </div>
-                <div class="glass-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card-icon"><i class="fas fa-fingerprint"></i></div>
-                    <h3>Business Identity</h3>
-                    <p>Logo kits, premium business cards, and corporate brochures.</p>
-                </div>
-                <div class="glass-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card-icon"><i class="fas fa-pen-fancy"></i></div>
-                    <h3>Lifestyle Design</h3>
-                    <p>Bespoke wedding invitations, photo albums, and premium resumes.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<footer>
+    &copy; 2026 <strong>Design With NS</strong>. All rights reserved. &nbsp;&middot;&nbsp; Your Satisfaction is our Elevation.
+</footer>
 
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="contact-layout">
-                <div class="contact-details" data-aos="fade-right">
-                    <h2>Let's build something <span class="text-accent">extraordinary.</span></h2>
-                    <div class="contact-link"><i class="fas fa-phone"></i> +91 9443128360</div>
-                    <div class="contact-link"><i class="fas fa-envelope"></i> designwithns715@gmail.com</div>
-                </div>
+<script>
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const siteLogo = document.getElementById('siteLogo');
 
-                <form id="contactForm" class="form-premium" data-aos="fade-left">
-                    <input type="text" id="name" placeholder="Name" required>
-                    <input type="email" id="email" placeholder="Email" required>
-                    <textarea id="message" rows="4" placeholder="How can we elevate your project?" required></textarea>
-                    <button type="submit" class="btn btn-submit">Submit Inquiry</button>
-                </form>
-            </div>
-        </div>
-    </section>
+    // Logo Assets Mapping[cite: 1, 2]
+    const lightLogo = "Design_With_NS_Logo.png";
+    const darkLogo = "Design_With_NS_Logo_Dark.png";
 
-    <footer class="footer">
-        <img src="assets/NS LOGO.png" alt="Logo" class="footer-logo">
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="https://wa.me/919443128360"><i class="fab fa-whatsapp"></i></a>
-        </div>
-        <p class="copyright">&copy; 2026 Design With NS.</p>
-    </footer>
+    function updateLogo(theme) {
+        siteLogo.src = theme === 'dark' ? darkLogo : lightLogo;
+    }
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    // Theme Toggle[cite: 1, 2]
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('dns-theme', newTheme);
+        updateLogo(newTheme);
+    });
+
+    // Initialize Theme on Load
+    const savedTheme = localStorage.getItem('dns-theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    updateLogo(savedTheme);
+
+    // Particles Background
+    const pc = document.getElementById('particles');
+    for (let i = 0; i < 25; i++) {
+        const s = document.createElement('span');
+        s.style.cssText = `position:absolute; width:${Math.random()*5}px; height:${Math.random()*5}px; left:${Math.random()*100}%; background:var(--green); opacity:0.3; animation:floatDot ${Math.random()*12+8}s linear infinite; animation-delay:${Math.random()*10}s; border-radius:50%;`;
+        pc.appendChild(s);
+    }
+
+    // Scroll Reveal Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Form Submission (Mailto fallback)
+    document.getElementById('quoteForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('fname').value;
+        const service = document.getElementById('fservice').value;
+        const msg = document.getElementById('fmessage').value;
+        window.location.href = `mailto:designwithns715@gmail.com?subject=Quote Request: ${service}&body=Name: ${name}%0D%0AService: ${service}%0D%0ADetails: ${msg}`;
+    });
+</script>
 </body>
 </html>
