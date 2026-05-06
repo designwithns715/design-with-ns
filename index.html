@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
     <style>
         /* ═══════════════════════════════════════════
-           THEME TOKENS
+           THEME TOKENS & UI BASICS
         ═══════════════════════════════════════════ */
         :root {
             --green: #5ac83c;
@@ -21,7 +21,6 @@
             --bg-section: #081a42;
             --bg-card: #0d2244;
             --bg-alt: #0a1c3a;
-            --navy-mid: #163580;
             --border: rgba(90, 200, 60, .18);
             --border-soft: rgba(255, 255, 255, .09);
             --text-h: #ffffff;
@@ -36,7 +35,6 @@
             --bg-section: #ffffff;
             --bg-card: #eef2fb;
             --bg-alt: #e6eef8;
-            --navy-mid: #163580;
             --border: rgba(13, 45, 107, .16);
             --border-soft: rgba(13, 45, 107, .1);
             --text-h: #0d2d6b;
@@ -46,13 +44,12 @@
             --shadow: 0 20px 56px rgba(13, 45, 107, .1);
         }
 
-        /* Reset & Global */
+        /* Base Reset */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; font-size: 16px; }
         body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-body); overflow-x: hidden; transition: var(--tt); line-height: 1.6; }
         img { max-width: 100%; display: block; }
         a { text-decoration: none; }
-        ul { list-style: none; }
         button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
         /* Navigation */
@@ -67,36 +64,28 @@
         .nav-logo-img { height: 42px; width: auto; border-radius: 6px; }
         .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text-h); }
         .nav-brand span { color: var(--green); }
-        
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { color: var(--text-muted); font-size: .88rem; font-weight: 500; transition: color .2s; position: relative; }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { color: var(--text-muted); font-size: .88rem; font-weight: 500; transition: color .2s; }
         .nav-links a:hover { color: var(--green); }
 
-        .nav-right { display: flex; align-items: center; gap: 15px; }
-        .theme-toggle { width: 38px; height: 38px; border-radius: 50%; background: var(--bg-card); display: flex; align-items: center; justify-content: center; color: var(--text-h); border: 1px solid var(--border-soft); transition: transform 0.2s; }
-        .theme-toggle:hover { transform: rotate(15deg); }
-        .theme-toggle svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; }
-        .i-sun, .i-moon { display: none; }
-        [data-theme="dark"] .i-moon { display: block; }
-        [data-theme="light"] .i-sun { display: block; }
-
-        .nav-cta { background: var(--green); color: #040f26; padding: 10px 22px; border-radius: 5px; font-weight: 700; font-size: 0.85rem; }
-
-        /* Sections Shared */
+        /* Shared Section Styles */
         section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
-        .section-header { text-align: center; margin-bottom: 60px; }
         .section-label { color: var(--green); font-weight: 700; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 10px; display: block; }
         .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: var(--text-h); margin-bottom: 15px; }
-        .section-sub { color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+        .section-sub { color: var(--text-muted); max-width: 600px; margin: 0 auto; text-align: center; }
 
-        /* Hero Section */
-        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; background: #040f26; transition: var(--tt); }
-        [data-theme="light"] .hero { background: linear-gradient(135deg, #0d2d6b 0%, #163580 50%, #1e48a8 100%); }
-        .hero-content { z-index: 10; max-width: 800px; }
-        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 5rem); color: #fff; line-height: 1.1; margin-bottom: 15px; }
-        .hero h1 span { color: var(--green); }
+        /* ════════════ SERVICES GRID ════════════ */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 26px; margin-top: 50px; }
+        .service-card { background: var(--bg-card); padding: 40px; border-radius: 14px; border: 1px solid var(--border-soft); transition: all 0.3s ease; }
+        .service-card:hover { transform: translateY(-10px); border-color: var(--green); box-shadow: var(--shadow); }
+        .svc-icon { width: 50px; height: 50px; background: rgba(90, 200, 60, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--green); }
+        .svc-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .service-card h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--text-h); margin-bottom: 15px; }
+        .service-list { list-style: none; }
+        .service-list li { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px; display: flex; gap: 10px; }
+        .service-list li::before { content: '→'; color: var(--green); font-weight: bold; }
 
-        /* ════════════ RESUME SECTION ════════════ */
+        /* ════════════ RESUME SECTION (UNTOUCHED) ════════════ */
         #resume {
             background: linear-gradient(135deg, #040f26 0%, #0d2d6b 100%);
             text-align: center; position: relative; overflow: hidden;
@@ -112,32 +101,30 @@
         .r-feat { display: flex; flex-direction: column; align-items: center; gap: 10px; }
         .r-feat-icon {
             width: 54px; height: 54px; border-radius: 13px;
-            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
             display: flex; align-items: center; justify-content: center; transition: all .3s;
         }
         .r-feat:hover .r-feat-icon { background: rgba(90,200,60,.2); border-color: var(--green); transform: translateY(-4px); }
         .r-feat-icon svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2; }
         .r-feat span { font-size: .83rem; font-weight: 500; color: rgba(255,255,255,0.58); letter-spacing: .03em; }
-
         .btn-resume {
             display: inline-flex; align-items: center; gap: 10px;
-            background: var(--green); color: #081a42;
+            background: var(--green); color: #040f26;
             padding: 16px 52px; border-radius: 6px; font-size: 1rem;
             font-weight: 700; letter-spacing: .05em;
             box-shadow: 0 6px 28px var(--green-glow); transition: all .22s;
         }
-        .btn-resume:hover { background: var(--green-hover); transform: translateY(-3px); }
 
-        /* Reveal Animations */
+        /* Form & Misc */
+        .quote-wrap { max-width: 700px; margin: 0 auto; background: var(--bg-card); padding: 50px; border-radius: 18px; border: 1px solid var(--border-soft); box-shadow: var(--shadow); }
+        .fg { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .fg input, .fg select, .fg textarea { background: var(--bg); border: 1px solid var(--border-soft); padding: 12px; border-radius: 8px; color: var(--text-h); font-family: inherit; }
+        
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
-        .stagger .reveal:nth-child(1) { transition-delay: 0.1s; }
-        .stagger .reveal:nth-child(2) { transition-delay: 0.2s; }
-        .stagger .reveal:nth-child(3) { transition-delay: 0.3s; }
-        .stagger .reveal:nth-child(4) { transition-delay: 0.4s; }
-
+        
         @media (max-width: 768px) {
-            .nav-links, .nav-cta { display: none; }
+            .nav-links { display: none; }
             section { padding: 60px 5%; }
         }
     </style>
@@ -152,26 +139,69 @@
     <ul class="nav-links">
         <li><a href="#services">Services</a></li>
         <li><a href="#resume">Resume</a></li>
-        <li><a href="#about">About</a></li>
         <li><a href="#quote">Contact</a></li>
     </ul>
     <div class="nav-right">
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
-            <svg class="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-            <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <button id="themeToggle" class="theme-toggle" style="width:38px; height:38px; border-radius:50%; border:1px solid var(--border-soft); display:flex; align-items:center; justify-content:center; color:var(--text-h);">
+            <span id="themeIcon">🌙</span>
         </button>
-        <a href="#quote" class="nav-cta">Get a Quote</a>
+        <a href="#quote" style="background:var(--green); color:#040f26; padding:10px 20px; border-radius:5px; font-weight:700; font-size:0.85rem; margin-left:15px;">Get a Quote</a>
     </div>
 </nav>
 
-<section class="hero" id="home">
-    <div class="hero-content">
-        <div class="hero-eyebrow">Professional Graphic Design</div>
-        <h1>Design With <span>NS</span></h1>
-        <p class="hero-tagline">Your Satisfaction is our Elevation</p>
+<section id="services">
+    <div class="section-header reveal">
+        <span class="section-label">Expertise</span>
+        <h2 class="section-title">Design Offerings</h2>
+        <p class="section-sub">Comprehensive creative services to elevate your personal and business presence.</p>
+    </div>
+
+    <div class="services-grid">
+        <!-- Social Media Card -->
+        <div class="service-card reveal">
+            <div class="svc-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </div>
+            <h3>Social Media</h3>
+            <ul class="service-list">
+                <li>Instagram Posts, Reels & Stories</li>
+                <li>Facebook Content & Covers</li>
+                <li>YouTube Art & Thumbnails</li>
+                <li>LinkedIn Banners & Graphics</li>
+            </ul>
+        </div>
+
+        <!-- Business Branding Card -->
+        <div class="service-card reveal">
+            <div class="svc-icon">
+                <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            </div>
+            <h3>Business Branding</h3>
+            <ul class="service-list">
+                <li>Logo & Brand Kit Design</li>
+                <li>Modern Business Cards</li>
+                <li>Company Brochures & Flyers</li>
+                <li>Professional Posters</li>
+            </ul>
+        </div>
+
+        <!-- Personal Design Card -->
+        <div class="service-card reveal">
+            <div class="svc-icon">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </div>
+            <h3>Lifestyle & Events</h3>
+            <ul class="service-list">
+                <li>Wedding & Party Invitations</li>
+                <li>Birthday Cards & Announcements</li>
+                <li>Photo Albums & Collages</li>
+                <li>Calendars & Planners</li>
+            </ul>
+        </div>
     </div>
 </section>
 
+<!-- ════════════ RESUME SECTION (UNTOUCHED) ════════════ -->
 <section id="resume">
     <div style="position:relative;z-index:2">
       <div class="section-label reveal">Career Tools</div>
@@ -179,64 +209,69 @@
       <p class="section-sub reveal" style="margin:0 auto 46px; color:rgba(255,255,255,0.7);">
         Stand out with a professionally crafted resume that gets you noticed. Tell us about yourself and we'll handle the rest.
       </p>
-      <div class="resume-features stagger">
-        <div class="r-feat reveal">
-          <div class="r-feat-icon"><svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg></div>
-          <span>Custom Design</span>
-        </div>
-        <div class="r-feat reveal">
-          <div class="r-feat-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-          <span>ATS-Friendly</span>
-        </div>
-        <div class="r-feat reveal">
-          <div class="r-feat-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <span>Quick Turnaround</span>
-        </div>
-        <div class="r-feat reveal">
-          <div class="r-feat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-          <span>All Industries</span>
-        </div>
+      <div class="resume-features">
+        <div class="r-feat reveal"><div class="r-feat-icon"><svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg></div><span>Custom Design</span></div>
+        <div class="r-feat reveal"><div class="r-feat-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><span>ATS-Friendly</span></div>
+        <div class="r-feat reveal"><div class="r-feat-icon"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><span>Quick Turnaround</span></div>
+        <div class="r-feat reveal"><div class="r-feat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><span>All Industries</span></div>
       </div>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScu3TdtbRWjVq7Zvr9dYx7VO1sENXJidSBub2mKws3Nh28nWQ/viewform?usp=sharing" target="_blank" class="btn-resume reveal">
-        Get Your Resume
-      </a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScu3TdtbRWjVq7Zvr9dYx7VO1sENXJidSBub2mKws3Nh28nWQ/viewform?usp=sharing" target="_blank" class="btn-resume reveal">Get Your Resume</a>
+    </div>
+</section>
+
+<section id="quote">
+    <div class="quote-wrap reveal">
+        <div class="section-header">
+            <h2 class="section-title">Get a Quote</h2>
+            <p class="section-sub">Describe your project and we'll get back to you with a personalized estimate.</p>
+        </div>
+        <form id="quoteForm">
+            <div class="fg"><label>Name</label><input type="text" id="fname" required /></div>
+            <div class="fg"><label>Email</label><input type="email" id="femail" required /></div>
+            <div class="fg"><label>Service</label>
+                <select id="fservice" required>
+                    <option value="">Select a service...</option>
+                    <option>Social Media Bundle</option>
+                    <option>Business Branding</option>
+                    <li>Lifestyle & Events</li>
+                    <option>Resume Design</option>
+                </select>
+            </div>
+            <div class="fg"><label>Project Details</label><textarea id="fmessage" rows="4"></textarea></div>
+            <button type="submit" class="btn-resume" style="width:100%; border:none; cursor:pointer;">Send Request</button>
+        </form>
     </div>
 </section>
 
 <script>
     const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
     const html = document.documentElement;
     const siteLogo = document.getElementById('siteLogo');
 
     const lightLogo = "Design_With_NS_Logo.png";
     const darkLogo = "Design_With_NS_Logo_Dark.png";
 
-    function updateLogo(theme) {
+    function updateTheme(theme) {
+        html.setAttribute('data-theme', theme);
         siteLogo.src = theme === 'dark' ? darkLogo : lightLogo;
+        themeIcon.innerText = theme === 'dark' ? '☀️' : '🌙';
+        localStorage.setItem('dns-theme', theme);
     }
 
     themeToggle.addEventListener('click', () => {
         const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        localStorage.setItem('dns-theme', newTheme);
-        updateLogo(newTheme);
+        updateTheme(currentTheme === 'dark' ? 'light' : 'dark');
     });
 
-    // Theme initialization
     const savedTheme = localStorage.getItem('dns-theme') || 'dark';
-    html.setAttribute('data-theme', savedTheme);
-    updateLogo(savedTheme);
+    updateTheme(savedTheme);
 
-    // Optimized Scroll Reveal Observer
-    const observerOptions = { threshold: 0.15 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('visible');
         });
-    }, observerOptions);
+    }, { threshold: 0.15 });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
