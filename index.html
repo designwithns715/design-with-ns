@@ -80,14 +80,10 @@ nav{
 .nav-links a:hover::after{transform:scaleX(1)}
 .nav-right{display:flex;align-items:center;gap:12px}
 
-/* Theme toggle */
-.theme-toggle{
-  width:38px;height:38px;border-radius:50%;border:1.5px solid var(--border-soft);
-  background:var(--bg-card);cursor:pointer;display:flex;align-items:center;
-  justify-content:center;transition:all .25s;color:var(--text-body);flex-shrink:0;
-}
-.theme-toggle:hover{border-color:var(--green);color:var(--green);transform:rotate(18deg)}
-.theme-toggle svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* Mode link in nav */
+.mode-link{display:flex;align-items:center;gap:6px}
+.mode-icon{display:inline-flex;align-items:center}
+.mode-icon svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .i-sun,.i-moon{display:none}
 [data-theme="dark"] .i-moon{display:block}
 [data-theme="light"] .i-sun{display:block}
@@ -377,64 +373,6 @@ footer{background:#020a1a;padding:28px 48px}
 .stagger .reveal:nth-child(4){transition-delay:.35s}
 
 /* ═══════════════════════════════════════════
-   TRENDS
-═══════════════════════════════════════════ */
-#trends{background:var(--bg)}
-.trends-wrap{max-width:1160px;margin:0 auto}
-.trends-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-
-.trend-card{
-  border:1.5px solid var(--border-soft);border-radius:14px;
-  padding:38px 32px;background:var(--bg-card);
-  transition:all .3s,var(--tt);position:relative;overflow:hidden;
-}
-.trend-card::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,var(--green),var(--navy-mid));
-  transform:scaleX(0);transform-origin:left;transition:transform .35s;
-}
-.trend-card:hover{border-color:rgba(90,200,60,.4);transform:translateY(-5px);box-shadow:var(--shadow)}
-.trend-card:hover::after{transform:scaleX(1)}
-.trend-card:hover .trend-icon{transform:scale(1.1) rotate(-4deg)}
-
-.trend-icon{
-  width:50px;height:50px;border-radius:12px;
-  background:linear-gradient(135deg,rgba(90,200,60,.12),rgba(22,53,128,.18));
-  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
-  margin-bottom:20px;transition:transform .3s;
-}
-.trend-icon svg{width:22px;height:22px;stroke:var(--green);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-.trend-year{
-  display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--green);
-  border:1px solid rgba(90,200,60,.3);padding:3px 10px;border-radius:20px;
-  margin-bottom:14px;
-}
-.trend-card h3{
-  font-family:'Playfair Display',serif;font-size:1.18rem;font-weight:700;
-  color:var(--text-h);margin-bottom:8px;transition:color .35s;
-}
-.trend-subtitle{
-  font-size:.82rem;color:var(--text-muted);font-style:italic;
-  margin-bottom:16px;padding-bottom:14px;
-  border-bottom:1.5px solid var(--border-soft);line-height:1.5;
-}
-.trend-items{list-style:none;margin-top:4px}
-.trend-items li{
-  padding:5px 0;font-size:.875rem;color:var(--text-muted);
-  display:flex;align-items:flex-start;gap:9px;line-height:1.55;
-  transition:color .35s;
-}
-.trend-items li .li-arr{flex-shrink:0;margin-top:4px;color:var(--green)}
-.trend-items li .li-arr svg{width:11px;height:11px;fill:var(--green)}
-.trend-tag{
-  display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.08em;
-  text-transform:uppercase;background:rgba(90,200,60,.1);
-  color:var(--green);padding:3px 9px;border-radius:4px;margin-bottom:12px;
-}
-
-/* ═══════════════════════════════════════════
    RESPONSIVE — TABLET ≤1024px
 ═══════════════════════════════════════════ */
 @media(max-width:1024px){
@@ -442,7 +380,6 @@ footer{background:#020a1a;padding:28px 48px}
   section{padding:80px 32px}
   .hero{padding:110px 32px 70px}
   .services-grid{grid-template-columns:repeat(2,1fr)}
-  .trends-grid{grid-template-columns:repeat(2,1fr)}
   .about-inner{grid-template-columns:1fr;gap:44px}
   .about-visual{aspect-ratio:auto;padding:44px;max-width:380px;margin:0 auto}
   .quote-wrap{padding:44px 40px}
@@ -464,7 +401,6 @@ footer{background:#020a1a;padding:28px 48px}
 
   .section-header{margin-bottom:40px}
   .services-grid{grid-template-columns:1fr;gap:18px}
-  .trends-grid{grid-template-columns:1fr;gap:18px}
   .service-card{padding:26px 22px}
 
   .resume-features{gap:22px}
@@ -511,24 +447,23 @@ footer{background:#020a1a;padding:28px 48px}
 
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
-    <li><a href="#trends">Trends</a></li>
     <li><a href="#resume">Resume</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#quote">Contact</a></li>
+    <li><a href="#" id="modeToggleLink" class="mode-link">
+      <span class="mode-icon">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </span>
+      Mode
+    </a></li>
   </ul>
 
   <div class="nav-right">
-    <!-- Day/Night Toggle -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle day/night mode">
-      <svg class="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <svg class="i-sun" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-      </svg>
-    </button>
+    <a href="login.html" class="nav-cta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#081a42" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Login
+    </a>
     <a href="#quote" class="nav-cta">Get a Quote</a>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
@@ -539,10 +474,17 @@ footer{background:#020a1a;padding:28px 48px}
 <!-- Mobile Drawer -->
 <div class="mobile-nav" id="mobileNav">
   <a href="#services" class="mob-link">Services</a>
-  <a href="#trends" class="mob-link">Trends</a>
   <a href="#resume" class="mob-link">Resume</a>
   <a href="#about" class="mob-link">About</a>
   <a href="#quote" class="mob-link">Contact</a>
+  <a href="#" id="modeToggleMobile" class="mob-link mode-link">
+    <span class="mode-icon">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </span>
+    Mode
+  </a>
+  <a href="login.html" class="mob-link">Login</a>
   <a href="#quote" class="m-cta mob-link">Get a Quote</a>
 </div>
 
@@ -615,70 +557,6 @@ footer{background:#020a1a;padding:28px 48px}
           <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Business Cards</li>
           <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Company Brochures</li>
           <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Flyers and Posters</li>
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ════════════ TRENDS ════════════ -->
-<section id="trends">
-  <div class="trends-wrap">
-    <div class="section-header reveal">
-      <div class="section-label">2026 Insights</div>
-      <h2 class="section-title">New Experimental Trends</h2>
-      <p class="section-sub">The cutting-edge design movements shaping how digital experiences look, move, and feel.</p>
-    </div>
-
-    <div class="trends-grid stagger">
-
-      <!-- Spatial UI -->
-      <div class="trend-card reveal">
-        <div class="trend-icon">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8l3 3-3 3"/><line x1="13" y1="11" x2="17" y2="11"/></svg>
-        </div>
-        <div class="trend-year">Experimental · 2026</div>
-        <h3>Spatial UI</h3>
-        <p class="trend-subtitle">Interfaces behaving like physical objects.</p>
-        <div class="trend-tag">Examples</div>
-        <ul class="trend-items">
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Cards with weight physics</li>
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Gesture-based interactions</li>
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Spatial layering</li>
-        </ul>
-      </div>
-
-      <!-- Humanized Motion -->
-      <div class="trend-card reveal">
-        <div class="trend-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/><path d="M18 2l4 4-4 4"/><path d="M22 6H14"/></svg>
-        </div>
-        <div class="trend-year">Experimental · 2026</div>
-        <h3>Humanized Motion</h3>
-        <p class="trend-subtitle">A reaction against "AI-looking" websites.</p>
-        <div class="trend-tag">Style</div>
-        <ul class="trend-items">
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Imperfect movement</li>
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Hand-drawn animation</li>
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Organic easing</li>
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Scribble motion effects</li>
-        </ul>
-      </div>
-
-      <!-- Sound-Reactive Motion -->
-      <div class="trend-card reveal">
-        <div class="trend-icon">
-          <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-        </div>
-        <div class="trend-year">Experimental · 2026</div>
-        <h3>Sound-Reactive Motion</h3>
-        <p class="trend-subtitle">Animations paired with subtle sound feedback.</p>
-        <div class="trend-tag">Examples</div>
-        <ul class="trend-items">
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Button click sounds</li>
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Motion synced UI feedback</li>
-          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Ambient transitions</li>
         </ul>
       </div>
 
@@ -855,17 +733,38 @@ footer{background:#020a1a;padding:28px 48px}
 </footer>
 
 <script>
-/* ── Theme ── */
+/* ── Theme: auto-detect device preference, allow manual override via Mode menu ── */
 const root = document.documentElement;
-const themeBtn = document.getElementById('themeToggle');
-const saved = localStorage.getItem('dns-theme');
-if (saved) root.setAttribute('data-theme', saved);
 
-themeBtn.addEventListener('click', () => {
-  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  root.setAttribute('data-theme', next);
-  localStorage.setItem('dns-theme', next);
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  localStorage.setItem('dns-theme', theme);
+}
+
+// On load: use saved preference OR detect device setting
+const saved = localStorage.getItem('dns-theme');
+if (saved) {
+  applyTheme(saved);
+} else {
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(prefersDark ? 'dark' : 'light');
+}
+
+// Listen for device setting changes (if user hasn't manually overridden)
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+  if (!localStorage.getItem('dns-theme')) {
+    applyTheme(e.matches ? 'dark' : 'light');
+  }
 });
+
+// Mode link in nav menu toggles theme manually
+function toggleTheme(e) {
+  e.preventDefault();
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+}
+document.getElementById('modeToggleLink').addEventListener('click', toggleTheme);
+document.getElementById('modeToggleMobile').addEventListener('click', toggleTheme);
 
 /* ── Hamburger ── */
 const hbg = document.getElementById('hamburger');
