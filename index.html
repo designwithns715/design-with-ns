@@ -92,8 +92,18 @@ nav{
   background:var(--green);color:#081a42;padding:9px 22px;
   border-radius:5px;font-size:.87rem;font-weight:700;
   letter-spacing:.03em;transition:background .2s,transform .15s,box-shadow .2s;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:6px;
 }
 .nav-cta:hover{background:var(--green-hover);transform:translateY(-1px);box-shadow:0 4px 16px var(--green-glow)}
+.nav-login{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--text-muted);font-size:.87rem;font-weight:600;
+  padding:9px 18px;border-radius:5px;border:1.5px solid var(--border-soft);
+  transition:color .2s,border-color .2s,transform .15s;white-space:nowrap;
+}
+.nav-login:hover{color:var(--green);border-color:var(--green);transform:translateY(-1px)}
+.nav-login svg{stroke:currentColor}
+.mob-signup{color:var(--green)!important;font-weight:700}
 
 /* Hamburger */
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
@@ -460,9 +470,13 @@ footer{background:#020a1a;padding:28px 48px}
   </ul>
 
   <div class="nav-right">
-    <a href="login.html" class="nav-cta">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#081a42" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <a href="login.html" class="nav-login">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
       Login
+    </a>
+    <a href="signup.html" class="nav-cta">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#081a42" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+      Sign Up
     </a>
     <a href="#quote" class="nav-cta">Get a Quote</a>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -485,6 +499,7 @@ footer{background:#020a1a;padding:28px 48px}
     Mode
   </a>
   <a href="login.html" class="mob-link">Login</a>
+  <a href="signup.html" class="mob-link mob-signup">Sign Up</a>
   <a href="#quote" class="m-cta mob-link">Get a Quote</a>
 </div>
 
