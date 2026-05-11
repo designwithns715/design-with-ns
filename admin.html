@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Dashboard – Design With NS</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --green:#5ac83c;
+  --green-hover:#6edc4f;
+  --bg:#040f26;
+  --bg-card:#0d2244;
+  --bg-alt:#081a42;
+  --border:rgba(255,255,255,.08);
+  --text:#ffffff;
+  --muted:#8fa6cc;
+  --shadow:0 18px 50px rgba(0,0,0,.45);
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+}
+
+/* SIDEBAR */
+.sidebar{
+  width:270px;
+  background:#06152f;
+  border-right:1px solid var(--border);
+  padding:28px 22px;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo img{
+  width:48px;
+  height:48px;
+  border-radius:8px;
+}
+
+.logo h1{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;
+}
+
+</html>
