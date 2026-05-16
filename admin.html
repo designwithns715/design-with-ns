@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Admin Dashboard – Design With NS</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--green:#5ac83c;--green-hover:#6edc4f;--green-glow:rgba(90,200,60,.3);--tt:background .3s,color .3s,border-color .3s;}
+[data-theme="dark"]{
+  --bg:#040f26;--bg2:#081a42;--bg3:#0d2244;--bg4:#0a1c3a;
+  --border:rgba(90,200,60,.15);--bs:rgba(255,255,255,.07);
+  --th:#ffffff;--tb:#c8d3e8;--tm:#7a8eaf;
+  --nav:rgba(4,15,38,.96);--shadow:0 8px 32px rgba(0,0,0,.5);
+  --red:#e05555;--red-bg:rgba(220,50,50,.1);--red-b:rgba(220,50,50,.25);
+  --yellow:#e0c030;--yellow-bg:rgba(224,192,48,.1);--yellow-b:rgba(224,192,48,.25);
+  --blue:#4fa3e0;--blue-bg:rgba(79,163,224,.1);--blue-b:rgba(79,163,224,.25);
+}
+[data-theme="light"]{
+  --bg:#f0f4fb;--bg2:#ffffff;--bg3:#e8eef8;--bg4:#dde6f5;
+  --border:rgba(13,45,107,.14);--bs:rgba(13,45,107,.08);
+  --th:#0d2d6b;--tb:#334466;--tm:#6a7fa0;
+  --nav:rgba(255,255,255,.96);--shadow:0 8px 32px rgba(13,45,107,.1);
+  --red:#c0392b;--red-bg:rgba(192,57,43,.08);--red-b:rgba(192,57,43,.2);
+  --yellow:#b8860b;--yellow-bg:rgba(184,134,11,.08);--yellow-b:rgba(184,134,11,.2);
+  --blue:#1a6fa8;--blue-bg:rgba(26,111,168,.08);--blue-b:rgba(26,111,168,.2);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tb);display:flex;min-height:100vh;transition:var(--tt);overflow-x:hidden}
+a{text-decoration:none}
+button{font-family:'DM Sans',sans-serif;cursor:pointer}
+input,textarea,select{font-family:'DM Sans',sans-serif}
+
+/* ═══════════ SIDEBAR ═══════════ */
+.sidebar{
+  width:240px;min-height:100vh;background:var(--bg2);
+  border-right:1px solid var(--bs);display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;z-index:100;transition:var(--tt),transform .3s;
+}
+.sb-logo{display:flex;align-items:center;gap:10px;padding:20px 20px 16px;border-bottom:1px solid var(--bs)}
+.sb-logo img{height:38px;width:38px;object-fit:contain;border-radius:6px}
+.sb-brand{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--th);line-height:1.2}
+.sb-brand span{color:var(--green)}
+.logo-dark{display:block}.logo-light{display:none}
+[data-theme="light"] .logo-dark{display:none}[data-theme="light"] .logo-light{display:block}
+
+.sb-admin-badge{margin:12px 16px;padding:8px 12px;background:rgba(90,200,60,.08);border:1px solid rgba(90,200,60,.2);border-radius:8px;display:flex;align-items:center;gap:8px;font-size:.75rem;font-weight:600;color:var(--green)}
+.sb-admin-badge svg{width:13px;height:13px;stroke:var(--green);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+.sb-nav{flex:1;padding:8px 12px;display:flex;flex-direction:column;gap:2px}
+.sb-nav-section{font-size:.65rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tm);padding:12px 8px 6px;margin-top:4px}
+.sb-link{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;color:var(--tm);font-size:.85rem;font-weight:500;transition:all .2s;cursor:pointer;border:none;background:none;width:100%;text-align:left}
+.sb-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.sb-link:hover{background:var(--bg3);color:var(--th)}
+.sb-link.active{background:rgba(90,200,60,.12);color:var(--green);font-weight:600}
+.sb-link.active svg{stroke:var(--green)}
+
+.sb-footer{padding:14px 16px;border-top:1px solid var(--bs);display:flex;flex-direction:column;gap:8px}
+.sb-mode{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;border:1px solid var(--bs);background:none;color:var(--tm);font-size:.8rem;font-weight:500;transition:all .2s;width:100%}
+.sb-mode:hover{color:var(--green);border-color:var(--green)}
+.sb-mode svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.i-sun,.i-moon{display:none}
+[data-theme="dark"] .i-moon{display:block}[data-theme="light"] .i-sun{display:block}
+.sb-logout{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;border:1px solid var(--red-b);background:var(--red-bg);color:var(--red);font-size:.8rem;font-weight:600;transition:all .2s;width:100%}
+.sb-logout:hover{opacity:.8}
+.sb-logout svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ═══════════ MAIN ═══════════ */
+.main{margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* ═══════════ TOPBAR ═══════════ */
+.topbar{
+  height:62px;background:var(--nav);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--bs);padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;transition:var(--tt);
+}
+.topbar-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--th)}
+.topbar-title span{color:var(--green);font-size:.8rem;font-family:'DM Sans',sans-serif;font-weight:500;margin-left:8px;vertical-align:middle}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.topbar-time{font-size:.78rem;color:var(--tm)}
+.btn-visit{display:inline-flex;align-items:center;gap:6px;background:var(--green);color:#081a42;padding:7px 16px;border-radius:5px;font-size:.8rem;font-weight:700;transition:all .2s;border:none}
+.btn-visit:hover{background:var(--green-hover);transform:translateY(-1px)}
+.btn-visit svg{width:13px;height:13px;stroke:#081a42;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.hamburger-admin{display:none;flex-direction:column;gap:4px;background:none;border:none;padding:4px;cursor:pointer}
+.hamburger-admin span{display:block;width:20px;height:2px;background:var(--th);border-radius:2px;transition:all .3s}
+
+/* ═══════════ CONTENT ═══════════ */
+.content{padding:28px;flex:1}
+.page{display:none}
+.page.active{display:block}
+
+/* ═══════════ STAT CARDS ═══════════ */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:28px}
+.stat-card{background:var(--bg2);border:1px solid var(--bs);border-radius:12px;padding:20px 22px;transition:var(--tt),transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.stat-card.green::before{background:var(--green)}
+.stat-card.blue::before{background:var(--blue)}
+.stat-card.yellow::before{background:var(--yellow)}
+.stat-card.red::before{background:var(--red)}
+.stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.stat-label{font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--tm);margin-bottom:8px}
+.stat-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--th);line-height:1}
+.stat-sub{font-size:.72rem;color:var(--tm);margin-top:5px}
+.stat-icon{position:absolute;right:16px;top:50%;transform:translateY(-50%);opacity:.08}
+.stat-icon svg{width:52px;height:52px;stroke:var(--th);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* ═══════════ SECTION HEADERS ═══════════ */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--th)}
+.sec-sub{font-size:.78rem;color:var(--tm);margin-top:2px}
+.btn-sm{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;font-size:.78rem;font-weight:600;border:none;transition:all .2s;cursor:pointer}
+.btn-sm.primary{background:var(--green);color:#081a42}
+.btn-sm.primary:hover{background:var(--green-hover)}
+.btn-sm.outline{background:none;border:1px solid var(--bs);color:var(--tb)}
+.btn-sm.outline:hover{border-color:var(--green);color:var(--green)}
+.btn-sm.danger{background:var(--red-bg);border:1px solid var(--red-b);color:var(--red)}
+.btn-sm.danger:hover{opacity:.8}
+.btn-sm svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ═══════════ TABLES ═══════════ */
+.table-wrap{background:var(--bg2);border:1px solid var(--bs);border-radius:12px;overflow:hidden;transition:var(--tt)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--bg3)}
+th{padding:11px 16px;text-align:left;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tm)}
+td{padding:11px 16px;font-size:.82rem;color:var(--tb);border-top:1px solid var(--bs)}
+tr:hover td{background:var(--bg3)}
+.td-bold{font-weight:600;color:var(--th)}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:.04em}
+.badge.green{background:rgba(90,200,60,.12);color:var(--green)}
+.badge.blue{background:var(--blue-bg);color:var(--blue)}
+.badge.yellow{background:var(--yellow-bg);color:var(--yellow)}
+.badge.red{background:var(--red-bg);color:var(--red)}
+.badge.gray{background:var(--bg3);color:var(--tm)}
+
+/* ═══════════ CARDS / PANELS ═══════════ */
+.panel{background:var(--bg2);border:1px solid var(--bs);border-radius:12px;padding:22px 24px;transition:var(--tt)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}
+
+/* ═══════════ FORM ELEMENTS ═══════════ */
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.fg label{font-size:.72rem;font-weight:700;color:var(--th);letter-spacing:.07em;text-transform:uppercase}
+.fg input,.fg select,.fg textarea{border:1.5px solid var(--bs);border-radius:7px;padding:10px 14px;font-size:.85rem;color:var(--th);background:var(--bg4);outline:none;transition:border-color .2s,box-shadow .2s,background .3s,color .3s;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(90,200,60,.1)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--tm)}
+.fg textarea{resize:vertical;min-height:90px}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ═══════════ SETTINGS SECTIONS ═══════════ */
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--bs)}
+.setting-row:last-child{border-bottom:none}
+.setting-info h4{font-size:.88rem;font-weight:600;color:var(--th)}
+.setting-info p{font-size:.75rem;color:var(--tm);margin-top:2px}
+.toggle-switch{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:var(--bs);border-radius:22px;cursor:pointer;transition:.3s}
+.toggle-slider::before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.toggle-switch input:checked+.toggle-slider{background:var(--green)}
+.toggle-switch input:checked+.toggle-slider::before{transform:translateX(18px)}
+
+/* ═══════════ MESSAGES / ALERTS ═══════════ */
+.alert{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:8px;font-size:.82rem;margin-bottom:16px}
+.alert svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:1px}
+.alert.success{background:rgba(90,200,60,.1);border:1px solid rgba(90,200,60,.25);color:#3ea828}
+.alert.warning{background:var(--yellow-bg);border:1px solid var(--yellow-b);color:var(--yellow)}
+.alert.error{background:var(--red-bg);border:1px solid var(--red-b);color:var(--red)}
+.alert.info{background:var(--blue-bg);border:1px solid var(--blue-b);color:var(--blue)}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--bs);border-radius:10px;padding:13px 18px;font-size:.83rem;color:var(--th);box-shadow:var(--shadow);z-index:999;display:none;align-items:center;gap:10px;min-width:260px;animation:slideUp .3s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.toast svg{width:16px;height:16px;stroke:var(--green);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ═══════════ SEARCH ═══════════ */
+.search-bar{display:flex;align-items:center;gap:8px;background:var(--bg4);border:1.5px solid var(--bs);border-radius:8px;padding:8px 14px;transition:border-color .2s}
+.search-bar:focus-within{border-color:var(--green)}
+.search-bar svg{width:14px;height:14px;stroke:var(--tm);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.search-bar input{border:none;background:none;outline:none;font-size:.83rem;color:var(--th);width:100%}
+.search-bar input::placeholder{color:var(--tm)}
+
+/* ═══════════ ACTIVITY FEED ═══════════ */
+.activity-item{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--bs)}
+.activity-item:last-child{border-bottom:none}
+.act-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.act-dot.green{background:var(--green)}
+.act-dot.blue{background:var(--blue)}
+.act-dot.yellow{background:var(--yellow)}
+.act-dot.red{background:var(--red)}
+.act-text{font-size:.82rem;color:var(--tb);line-height:1.5}
+.act-text strong{color:var(--th)}
+.act-time{font-size:.72rem;color:var(--tm);margin-top:2px}
+
+/* ═══════════ CHART BAR ═══════════ */
+.chart-bar-wrap{display:flex;flex-direction:column;gap:10px}
+.chart-bar-row{display:flex;align-items:center;gap:12px}
+.chart-bar-label{font-size:.75rem;color:var(--tm);width:90px;flex-shrink:0;text-align:right}
+.chart-bar-track{flex:1;height:10px;background:var(--bg3);border-radius:10px;overflow:hidden}
+.chart-bar-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--green),#3ea828);transition:width .8s cubic-bezier(.23,1.12,.58,1)}
+.chart-bar-val{font-size:.75rem;font-weight:600;color:var(--th);width:32px;flex-shrink:0}
+
+/* ═══════════ EMPTY STATE ═══════════ */
+.empty{text-align:center;padding:40px 20px;color:var(--tm)}
+.empty svg{width:40px;height:40px;stroke:var(--tm);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin:0 auto 12px;opacity:.5}
+.empty p{font-size:.85rem}
+
+/* ═══════════ MODAL ═══════════ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--bs);border-radius:16px;width:100%;max-width:480px;padding:28px;box-shadow:var(--shadow);animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.modal-header h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--th)}
+.modal-close{background:none;border:none;color:var(--tm);font-size:1.3rem;cursor:pointer;line-height:1;padding:2px 6px;border-radius:4px;transition:color .2s}
+.modal-close:hover{color:var(--red)}
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){
+  .two-col,.three-col{grid-template-columns:1fr}
+  .fg-row{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0}
+  .hamburger-admin{display:flex}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .content{padding:18px}
+}
+@media(max-width:480px){.stats-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ════════ SIDEBAR ════════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sb-logo">
+    <img src="Design_With_NS_Logo_Dark.png" class="logo-dark" alt="NS"/>
+    <img src="Design_With_NS_Logo.png"      class="logo-light" alt="NS"/>
+    <div class="sb-brand">Design With <span>NS</span></div>
+  </div>
+
+  <div class="sb-admin-badge">
+    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Admin Dashboard
+  </div>
+
+  <nav class="sb-nav">
+    <div class="sb-nav-section">Overview</div>
+    <button class="sb-link active" onclick="goto('dashboard')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </button>
+    <button class="sb-link" onclick="goto('analytics')">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      Analytics
+    </button>
+
+    <div class="sb-nav-section">Management</div>
+    <button class="sb-link" onclick="goto('users')">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Users
+    </button>
+    <button class="sb-link" onclick="goto('quotes')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Quote Requests
+    </button>
+    <button class="sb-link" onclick="goto('orders')">
+      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      Orders
+    </button>
+    <button class="sb-link" onclick="goto('resumes')">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Resume Requests
+    </button>
+
+    <div class="sb-nav-section">Site</div>
+    <button class="sb-link" onclick="goto('content')">
+      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Content
+    </button>
+    <button class="sb-link" onclick="goto('settings')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </button>
+  </nav>
+
+  <div class="sb-footer">
+    <button class="sb-mode" id="modeBtn">
+      <svg class="i-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      Toggle Mode
+    </button>
+    <button class="sb-logout" onclick="logout()">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Logout
+    </button>
+  </div>
+</aside>
+
+<!-- ════════ MAIN ════════ -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:14px">
+      <button class="hamburger-admin" id="hamburgerAdmin">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="topbar-title" id="topbarTitle">Dashboard <span>Overview</span></div>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-time" id="liveClock"></span>
+      <a href="index.html" target="_blank" class="btn-visit">
+        <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Visit Site
+      </a>
+    </div>
+  </div>
+
+  <!-- CONTENT AREA -->
+  <div class="content">
+
+    <!-- ══ DASHBOARD ══ -->
+    <div class="page active" id="page-dashboard">
+      <div class="stats-grid">
+        <div class="stat-card green">
+          <div class="stat-label">Registered Users</div>
+          <div class="stat-val" id="statUsers">0</div>
+          <div class="stat-sub">Total accounts created</div>
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-label">Quote Requests</div>
+          <div class="stat-val" id="statQuotes">0</div>
+          <div class="stat-sub">Pending review</div>
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-label">Resume Requests</div>
+          <div class="stat-val" id="statResumes">0</div>
+          <div class="stat-sub">Via Google Form</div>
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg></div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-label">Active Orders</div>
+          <div class="stat-val" id="statOrders">0</div>
+          <div class="stat-sub">In progress</div>
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg></div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <!-- Recent Activity -->
+        <div class="panel">
+          <div class="sec-header">
+            <div><div class="sec-title">Recent Activity</div><div class="sec-sub">Latest events across the platform</div></div>
+          </div>
+          <div id="activityFeed"></div>
+        </div>
+
+        <!-- Services breakdown -->
+        <div class="panel">
+          <div class="sec-header">
+            <div><div class="sec-title">Service Interest</div><div class="sec-sub">Most requested categories</div></div>
+          </div>
+          <div class="chart-bar-wrap" id="serviceChart"></div>
+        </div>
+      </div>
+
+      <!-- Recent Users table -->
+      <div class="sec-header" style="margin-top:8px">
+        <div><div class="sec-title">Recent Registrations</div></div>
+        <button class="btn-sm outline" onclick="goto('users')">View All</button>
+      </div>
+      <div class="table-wrap">
+        <table id="recentUsersTable">
+          <thead><tr><th>Name</th><th>Email / Phone</th><th>Method</th><th>Joined</th><th>Status</th></tr></thead>
+          <tbody id="recentUsersTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ ANALYTICS ══ -->
+    <div class="page" id="page-analytics">
+      <div class="alert info">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Analytics data is based on localStorage records. Connect a backend (e.g. Firebase, Supabase) for real-time analytics.
+      </div>
+      <div class="three-col">
+        <div class="panel" style="text-align:center">
+          <div class="stat-label" style="text-align:center">Sign-up Methods</div>
+          <div style="margin-top:16px" id="methodBreakdown"></div>
+        </div>
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:14px">Registrations Over Time</div>
+          <div id="regTimeline"></div>
+        </div>
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:14px">Quick Stats</div>
+          <div id="quickStats"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="sec-title" style="margin-bottom:16px">All Users — Full Table</div>
+        <div class="table-wrap" style="border:none">
+          <table id="analyticsTable">
+            <thead><tr><th>#</th><th>Name</th><th>Contact</th><th>Method</th><th>Created At</th></tr></thead>
+            <tbody id="analyticsTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ USERS ══ -->
+    <div class="page" id="page-users">
+      <div class="sec-header">
+        <div><div class="sec-title">User Management</div><div class="sec-sub" id="userCountLabel"></div></div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="search-bar" style="width:220px">
+            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Search users…" oninput="filterUsers(this.value)" id="userSearch"/>
+          </div>
+          <button class="btn-sm primary" onclick="openAddUser()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add User
+          </button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Method</th><th>Joined</th><th>Actions</th></tr></thead>
+          <tbody id="usersTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ QUOTES ══ -->
+    <div class="page" id="page-quotes">
+      <div class="sec-header">
+        <div><div class="sec-title">Quote Requests</div><div class="sec-sub">Submitted via the website contact form</div></div>
+        <button class="btn-sm primary" onclick="addDemoQuote()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Demo
+        </button>
+      </div>
+      <div class="alert info" style="margin-bottom:16px">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Quote requests submitted via the "Get a Quote" form on the website will appear here. Currently showing demo data.
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Email</th><th>Service</th><th>Details</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="quotesTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ ORDERS ══ -->
+    <div class="page" id="page-orders">
+      <div class="sec-header">
+        <div><div class="sec-title">Orders</div><div class="sec-sub">Track all design projects</div></div>
+        <button class="btn-sm primary" onclick="openAddOrder()">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Order
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Order ID</th><th>Client</th><th>Service</th><th>Deadline</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="ordersTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ RESUMES ══ -->
+    <div class="page" id="page-resumes">
+      <div class="sec-header">
+        <div><div class="sec-title">Resume Requests</div><div class="sec-sub">Submitted via Google Form</div></div>
+      </div>
+      <div class="alert success">
+        <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Resume requests go directly to your Google Form. View live responses in your linked Google Sheet.
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:12px">Google Form Link</div>
+          <p style="font-size:.82rem;color:var(--tm);margin-bottom:14px;line-height:1.6">Your resume request form is live. Share this link or embed it anywhere to collect submissions.</p>
+          <div style="background:var(--bg4);border:1px solid var(--bs);border-radius:7px;padding:10px 14px;font-size:.75rem;color:var(--tm);word-break:break-all;margin-bottom:14px">
+            https://docs.google.com/forms/d/e/1FAIpQLScu3TdtbRWjVq7Zvr9dYx7VO1sENXJidSBub2mKws3Nh28nWQ/viewform
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn-sm primary" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScu3TdtbRWjVq7Zvr9dYx7VO1sENXJidSBub2mKws3Nh28nWQ/viewform','_blank')">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Open Form
+            </button>
+            <button class="btn-sm outline" onclick="copyFormLink()">
+              <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy Link
+            </button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:12px">Google Sheet Responses</div>
+          <p style="font-size:.82rem;color:var(--tm);margin-bottom:14px;line-height:1.6">All form submissions are automatically saved to your linked Google Sheet in real time.</p>
+          <button class="btn-sm primary" onclick="showToast('Open your Google Form → Responses tab → click the Sheets icon to view responses.')">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+            View Responses Guide
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ CONTENT ══ -->
+    <div class="page" id="page-content">
+      <div class="sec-header">
+        <div><div class="sec-title">Content Management</div><div class="sec-sub">Edit website text and details</div></div>
+        <button class="btn-sm primary" onclick="saveContent()">
+          <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save Changes
+        </button>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:16px">Hero Section</div>
+          <div class="fg"><label>Tagline</label><input type="text" id="cTagline" value="Your Satisfaction is our Elevation" placeholder="Enter tagline"/></div>
+          <div class="fg"><label>Eyebrow Text</label><input type="text" id="cEyebrow" value="Professional Graphic Design" placeholder="Enter eyebrow text"/></div>
+          <div class="fg"><label>Primary Button Text</label><input type="text" id="cBtn1" value="Explore Services" placeholder="Button text"/></div>
+          <div class="fg"><label>Secondary Button Text</label><input type="text" id="cBtn2" value="Get a Quote" placeholder="Button text"/></div>
+        </div>
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:16px">Contact Information</div>
+          <div class="fg"><label>Email</label><input type="email" id="cEmail" value="designwithns715@gmail.com"/></div>
+          <div class="fg"><label>Instagram URL</label><input type="text" id="cInsta" value="https://www.instagram.com/design.with.ns/"/></div>
+          <div class="fg"><label>LinkedIn URL</label><input type="text" id="cLinkedIn" value="https://www.linkedin.com/company/design-with-ns/"/></div>
+          <div class="fg"><label>Footer Copyright Year</label><input type="text" id="cYear" value="2025"/></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="sec-title" style="margin-bottom:16px">About Section</div>
+        <div class="fg"><label>About Description</label>
+          <textarea id="cAbout">Design With NS is a passionate design studio dedicated to helping individuals and businesses communicate beautifully. We believe great design is not just about aesthetics — it's about telling your story, building your brand, and making a lasting impression.</textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SETTINGS ══ -->
+    <div class="page" id="page-settings">
+      <div class="two-col">
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:4px">Admin Account</div>
+          <p style="font-size:.78rem;color:var(--tm);margin-bottom:18px">Manage your admin credentials</p>
+          <div class="fg"><label>Admin Email</label><input type="email" value="admin@designwithns.com"/></div>
+          <div class="fg"><label>Current Password</label><input type="password" placeholder="Enter current password"/></div>
+          <div class="fg"><label>New Password</label><input type="password" placeholder="Enter new password"/></div>
+          <button class="btn-sm primary" onclick="showToast('Password updated successfully!')">
+            <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg>
+            Save Changes
+          </button>
+        </div>
+        <div class="panel">
+          <div class="sec-title" style="margin-bottom:4px">Platform Settings</div>
+          <p style="font-size:.78rem;color:var(--tm);margin-bottom:18px">Configure site behaviour</p>
+          <div class="setting-row">
+            <div class="setting-info"><h4>New Registrations</h4><p>Allow new users to sign up</p></div>
+            <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><h4>Quote Form Active</h4><p>Accept quote submissions</p></div>
+            <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><h4>Maintenance Mode</h4><p>Show maintenance page to visitors</p></div>
+            <label class="toggle-switch"><input type="checkbox"/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><h4>Email Notifications</h4><p>Receive alerts on new submissions</p></div>
+            <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+          <div class="setting-row">
+            <div class="setting-info"><h4>Google Sign-Up</h4><p>Allow Google OAuth registration</p></div>
+            <label class="toggle-switch"><input type="checkbox" checked/><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="sec-title" style="margin-bottom:16px">Danger Zone</div>
+        <div class="alert warning" style="margin-bottom:14px">
+          <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          These actions are irreversible. Proceed with caution.
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn-sm danger" onclick="if(confirm('Clear ALL registered users? This cannot be undone.')){localStorage.removeItem('dns_users');showToast('All users cleared.');renderAll();}">
+            <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+            Clear All Users
+          </button>
+          <button class="btn-sm danger" onclick="if(confirm('Clear all quote records?')){localStorage.removeItem('dns_quotes');showToast('Quotes cleared.');renderAll();}">
+            Clear Quotes
+          </button>
+          <button class="btn-sm danger" onclick="if(confirm('Clear all order records?')){localStorage.removeItem('dns_orders');showToast('Orders cleared.');renderAll();}">
+            Clear Orders
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ════════ MODALS ════════ -->
+<!-- Add User -->
+<div class="modal-overlay" id="modalAddUser">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Add New User</h3>
+      <button class="modal-close" onclick="closeModal('modalAddUser')">&times;</button>
+    </div>
+    <div class="fg-row">
+      <div class="fg"><label>First Name</label><input type="text" id="muFirst" placeholder="First name"/></div>
+      <div class="fg"><label>Last Name</label><input type="text" id="muLast" placeholder="Last name"/></div>
+    </div>
+    <div class="fg"><label>Email</label><input type="email" id="muEmail" placeholder="user@example.com"/></div>
+    <div class="fg"><label>Phone</label><input type="tel" id="muPhone" placeholder="+91 00000 00000"/></div>
+    <div class="fg"><label>Password</label><input type="password" id="muPass" placeholder="Min. 8 characters"/></div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px">
+      <button class="btn-sm outline" onclick="closeModal('modalAddUser')">Cancel</button>
+      <button class="btn-sm primary" onclick="saveNewUser()">Create User</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Order -->
+<div class="modal-overlay" id="modalAddOrder">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>New Order</h3>
+      <button class="modal-close" onclick="closeModal('modalAddOrder')">&times;</button>
+    </div>
+    <div class="fg"><label>Client Name</label><input type="text" id="moClient" placeholder="Client name"/></div>
+    <div class="fg"><label>Service</label>
+      <select id="moService">
+        <option>Logo & Brand Kit</option><option>Social Media Posts</option><option>Wedding Invitation</option>
+        <option>Business Cards</option><option>YouTube Thumbnail</option><option>Resume / CV</option>
+        <option>Company Brochure</option><option>Flyer / Poster</option>
+      </select>
+    </div>
+    <div class="fg-row">
+      <div class="fg"><label>Deadline</label><input type="date" id="moDeadline"/></div>
+      <div class="fg"><label>Status</label>
+        <select id="moStatus"><option>Pending</option><option>In Progress</option><option>Review</option><option>Completed</option></select>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px">
+      <button class="btn-sm outline" onclick="closeModal('modalAddOrder')">Cancel</button>
+      <button class="btn-sm primary" onclick="saveOrder()">Add Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+/* ══════════════════════════════════════
+   BOOTSTRAP — auth guard + theme
+══════════════════════════════════════ */
+(function(){
+  const session = JSON.parse(localStorage.getItem('dns_session')||'null');
+  if(!session || session.role !== 'admin'){
+    window.location.href = 'login.html';
+    return;
+  }
+  const root = document.documentElement;
+  const saved = localStorage.getItem('dns-theme');
+  root.setAttribute('data-theme', saved||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'));
+})();
+
+const root = document.documentElement;
+document.getElementById('modeBtn').addEventListener('click',()=>{
+  const next = root.getAttribute('data-theme')==='dark'?'light':'dark';
+  root.setAttribute('data-theme',next); localStorage.setItem('dns-theme',next);
+});
+
+/* ══════════════════════════════════════
+   CLOCK
+══════════════════════════════════════ */
+function tick(){
+  const now = new Date();
+  document.getElementById('liveClock').textContent =
+    now.toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'}) + ' · ' +
+    now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+}
+tick(); setInterval(tick,30000);
+
+/* ══════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════ */
+const pages = {
+  dashboard:  'Dashboard',
+  analytics:  'Analytics',
+  users:      'User Management',
+  quotes:     'Quote Requests',
+  orders:     'Orders',
+  resumes:    'Resume Requests',
+  content:    'Content Management',
+  settings:   'Settings'
+};
+function goto(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sb-link').forEach(l=>l.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.sb-link').forEach(l=>{
+    if(l.getAttribute('onclick')==="goto('"+id+"')") l.classList.add('active');
+  });
+  document.getElementById('topbarTitle').innerHTML = pages[id]+'<span>Admin Panel</span>';
+  renderAll();
+  // close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+/* ══════════════════════════════════════
+   HAMBURGER (MOBILE)
+══════════════════════════════════════ */
+document.getElementById('hamburgerAdmin').addEventListener('click',()=>{
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+/* ══════════════════════════════════════
+   DATA HELPERS
+══════════════════════════════════════ */
+function getUsers(){  try{return JSON.parse(localStorage.getItem('dns_users')||'[]');}catch{return[];} }
+function getQuotes(){ try{return JSON.parse(localStorage.getItem('dns_quotes')||'[]');}catch{return[];} }
+function getOrders(){ try{return JSON.parse(localStorage.getItem('dns_orders')||'[]');}catch{return[];} }
+function saveUsers(a){  localStorage.setItem('dns_users',  JSON.stringify(a)); }
+function saveQuotes(a){ localStorage.setItem('dns_quotes', JSON.stringify(a)); }
+function saveOrders(a){ localStorage.setItem('dns_orders', JSON.stringify(a)); }
+function hashPass(s){ let h=0; for(let i=0;i<s.length;i++){h=Math.imul(31,h)+s.charCodeAt(i)|0;} return h.toString(36); }
+function fmtDate(iso){ return iso ? new Date(iso).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—'; }
+function methodBadge(m){
+  if(m==='google') return '<span class="badge blue">Google</span>';
+  if(m==='phone')  return '<span class="badge yellow">Phone</span>';
+  return '<span class="badge gray">Email</span>';
+}
+function statusBadge(s){
+  const m = {Pending:'yellow','In Progress':'blue',Review:'gray',Completed:'green',New:'blue',Replied:'green'};
+  return `<span class="badge ${m[s]||'gray'}">${s}</span>`;
+}
+
+/* ══════════════════════════════════════
+   SEED DEMO DATA (first load)
+══════════════════════════════════════ */
+(function seedDemo(){
+  if(!localStorage.getItem('dns_quotes')){
+    saveQuotes([
+      {id:'q1',name:'Priya Sharma',email:'priya@example.com',service:'Logo & Brand Kit',message:'Need a modern logo for my bakery.',date:new Date(Date.now()-86400000*2).toISOString(),status:'New'},
+      {id:'q2',name:'Ravi Kumar',email:'ravi@example.com',service:'Wedding Invitation',message:'Need digital + printable invite for Jan 2026.',date:new Date(Date.now()-86400000).toISOString(),status:'Replied'},
+    ]);
+  }
+  if(!localStorage.getItem('dns_orders')){
+    saveOrders([
+      {id:'ORD001',client:'Priya Sharma',service:'Logo & Brand Kit',deadline:'2026-06-15',status:'In Progress'},
+      {id:'ORD002',client:'Ravi Kumar',service:'Wedding Invitation',deadline:'2026-05-30',status:'Review'},
+    ]);
+  }
+})();
+
+/* ══════════════════════════════════════
+   RENDER ALL
+══════════════════════════════════════ */
+function renderAll(){
+  const users   = getUsers();
+  const quotes  = getQuotes();
+  const orders  = getOrders();
+  const active  = orders.filter(o=>o.status!=='Completed').length;
+
+  // Stat cards
+  document.getElementById('statUsers').textContent   = users.length;
+  document.getElementById('statQuotes').textContent  = quotes.length;
+  document.getElementById('statResumes').textContent = '—';
+  document.getElementById('statOrders').textContent  = active;
+
+  renderDashboard(users,quotes,orders);
+  renderUsers(users);
+  renderQuotes(quotes);
+  renderOrders(orders);
+  renderAnalytics(users);
+}
+
+/* ──── DASHBOARD ──── */
+function renderDashboard(users,quotes,orders){
+  // Activity feed
+  const feed = document.getElementById('activityFeed');
+  if(!feed) return;
+  const events = [
+    ...users.map(u=>({time:u.createdAt,dot:'green',text:`<strong>${u.firstName} ${u.lastName}</strong> signed up via ${u.method||'email'}`})),
+    ...quotes.map(q=>({time:q.date,dot:'blue',text:`<strong>${q.name}</strong> submitted a quote request for <strong>${q.service}</strong>`})),
+    ...orders.map(o=>({time:new Date().toISOString(),dot:'yellow',text:`Order <strong>${o.id}</strong> — ${o.service} (${o.status})`})),
+  ].sort((a,b)=>new Date(b.time)-new Date(a.time)).slice(0,8);
+
+  if(events.length===0){
+    feed.innerHTML='<div class="empty"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg><p>No activity yet</p></div>';
+  } else {
+    feed.innerHTML = events.map(e=>`
+      <div class="activity-item">
+        <div class="act-dot ${e.dot}"></div>
+        <div><div class="act-text">${e.text}</div><div class="act-time">${fmtDate(e.time)}</div></div>
+      </div>`).join('');
+  }
+
+  // Service chart
+  const chart = document.getElementById('serviceChart');
+  if(chart){
+    const services = ['Social Media','Personal & Lifestyle','Business Designs','Resume / CV'];
+    const vals = [42,28,22,8];
+    chart.innerHTML = services.map((s,i)=>`
+      <div class="chart-bar-row">
+        <div class="chart-bar-label">${s}</div>
+        <div class="chart-bar-track"><div class="chart-bar-fill" style="width:0%" data-w="${vals[i]}%"></div></div>
+        <div class="chart-bar-val">${vals[i]}%</div>
+      </div>`).join('');
+    setTimeout(()=>{ chart.querySelectorAll('.chart-bar-fill').forEach(f=>{ f.style.width=f.dataset.w; }); },100);
+  }
+
+  // Recent users table
+  const tbody = document.getElementById('recentUsersTbody');
+  if(tbody){
+    if(users.length===0){
+      tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--tm);padding:28px">No users registered yet</td></tr>';
+    } else {
+      tbody.innerHTML = [...users].reverse().slice(0,5).map(u=>`
+        <tr>
+          <td class="td-bold">${u.firstName} ${u.lastName}</td>
+          <td>${u.email||u.phone||'—'}</td>
+          <td>${methodBadge(u.method)}</td>
+          <td>${fmtDate(u.createdAt)}</td>
+          <td><span class="badge green">Active</span></td>
+        </tr>`).join('');
+    }
+  }
+}
+
+/* ──── USERS ──── */
+let usersSnapshot = [];
+function renderUsers(users){
+  usersSnapshot = users;
+  const label = document.getElementById('userCountLabel');
+  if(label) label.textContent = `${users.length} total user${users.length!==1?'s':''} registered`;
+  buildUsersTable(users);
+}
+function buildUsersTable(users){
+  const tbody = document.getElementById('usersTbody');
+  if(!tbody) return;
+  if(users.length===0){
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--tm);padding:28px">No users found</td></tr>';
+    return;
+  }
+  tbody.innerHTML = [...users].reverse().map(u=>`
+    <tr>
+      <td class="td-bold">${u.firstName} ${u.lastName}</td>
+      <td>${u.email||'—'}</td>
+      <td>${u.phone||'—'}</td>
+      <td>${methodBadge(u.method)}</td>
+      <td>${fmtDate(u.createdAt)}</td>
+      <td>
+        <button class="btn-sm danger" onclick="deleteUser('${u.id}')">
+          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+          Delete
+        </button>
+      </td>
+    </tr>`).join('');
+}
+function filterUsers(q){
+  const filtered = usersSnapshot.filter(u=>
+    (u.firstName+' '+u.lastName+u.email+u.phone).toLowerCase().includes(q.toLowerCase())
+  );
+  buildUsersTable(filtered);
+}
+function deleteUser(id){
+  if(!confirm('Delete this user? This cannot be undone.')) return;
+  const users = getUsers().filter(u=>u.id!==id);
+  saveUsers(users); showToast('User deleted.'); renderAll();
+}
+function openAddUser(){ openModal('modalAddUser'); }
+function saveNewUser(){
+  const first = document.getElementById('muFirst').value.trim();
+  const last  = document.getElementById('muLast').value.trim();
+  const email = document.getElementById('muEmail').value.trim();
+  const phone = document.getElementById('muPhone').value.trim();
+  const pass  = document.getElementById('muPass').value;
+  if(!first||!last){ alert('Name is required.'); return; }
+  const users = getUsers();
+  users.push({id:'u_'+Date.now(),firstName:first,lastName:last,email:email.toLowerCase(),phone,method:'email',passwordHash:hashPass(pass||'default123'),createdAt:new Date().toISOString()});
+  saveUsers(users); closeModal('modalAddUser'); showToast('User created!'); renderAll();
+  ['muFirst','muLast','muEmail','muPhone','muPass'].forEach(id=>document.getElementById(id).value='');
+}
+
+/* ──── QUOTES ──── */
+function renderQuotes(quotes){
+  const tbody = document.getElementById('quotesTbody');
+  if(!tbody) return;
+  if(quotes.length===0){
+    tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--tm);padding:28px">No quote requests yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = [...quotes].reverse().map(q=>`
+    <tr>
+      <td class="td-bold">${q.name}</td>
+      <td>${q.email}</td>
+      <td>${q.service}</td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${q.message}">${q.message}</td>
+      <td>${fmtDate(q.date)}</td>
+      <td>${statusBadge(q.status)}</td>
+      <td>
+        <button class="btn-sm primary" onclick="replyQuote('${q.email}','${q.service}')">Reply</button>
+      </td>
+    </tr>`).join('');
+}
+function addDemoQuote(){
+  const quotes = getQuotes();
+  quotes.push({id:'q'+Date.now(),name:'Demo Client',email:'demo@example.com',service:'Social Media Posts',message:'Need 10 Instagram posts for product launch.',date:new Date().toISOString(),status:'New'});
+  saveQuotes(quotes); showToast('Demo quote added.'); renderAll();
+}
+function replyQuote(email,service){
+  window.location.href=`mailto:${email}?subject=Re: Your Quote Request – ${service}&body=Hi,%0A%0AThank you for reaching out to Design With NS regarding ${service}.%0A%0AWe'd love to help! Please let us know your preferred timeline and any additional details.%0A%0ABest regards,%0ADesign With NS Team`;
+}
+
+/* ──── ORDERS ──── */
+function renderOrders(orders){
+  const tbody = document.getElementById('ordersTbody');
+  if(!tbody) return;
+  if(orders.length===0){
+    tbody.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--tm);padding:28px">No orders yet</td></tr>';
+    return;
+  }
+  tbody.innerHTML = [...orders].reverse().map(o=>`
+    <tr>
+      <td class="td-bold">${o.id}</td>
+      <td>${o.client}</td>
+      <td>${o.service}</td>
+      <td>${o.deadline||'—'}</td>
+      <td>
+        <select onchange="updateOrderStatus('${o.id}',this.value)" style="border:1px solid var(--bs);background:var(--bg4);color:var(--th);border-radius:5px;padding:4px 8px;font-size:.75rem;cursor:pointer">
+          ${['Pending','In Progress','Review','Completed'].map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}
+        </select>
+      </td>
+      <td>
+        <button class="btn-sm danger" onclick="deleteOrder('${o.id}')">
+          <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+          Delete
+        </button>
+      </td>
+    </tr>`).join('');
+}
+function updateOrderStatus(id,status){
+  const orders = getOrders().map(o=>o.id===id?{...o,status}:o);
+  saveOrders(orders); showToast(`Order ${id} → ${status}`); renderAll();
+}
+function deleteOrder(id){
+  if(!confirm('Delete this order?')) return;
+  saveOrders(getOrders().filter(o=>o.id!==id)); showToast('Order deleted.'); renderAll();
+}
+function openAddOrder(){ openModal('modalAddOrder'); }
+function saveOrder(){
+  const client   = document.getElementById('moClient').value.trim();
+  const service  = document.getElementById('moService').value;
+  const deadline = document.getElementById('moDeadline').value;
+  const status   = document.getElementById('moStatus').value;
+  if(!client){ alert('Client name is required.'); return; }
+  const orders = getOrders();
+  orders.push({id:'ORD'+(orders.length+1).toString().padStart(3,'0'),client,service,deadline,status});
+  saveOrders(orders); closeModal('modalAddOrder'); showToast('Order added!'); renderAll();
+  ['moClient','moDeadline'].forEach(id=>document.getElementById(id).value='');
+}
+
+/* ──── ANALYTICS ──── */
+function renderAnalytics(users){
+  // Method breakdown
+  const mb = document.getElementById('methodBreakdown');
+  if(mb){
+    const counts = {email:0,phone:0,google:0};
+    users.forEach(u=>{ if(counts[u.method]!==undefined) counts[u.method]++; });
+    const total = users.length||1;
+    mb.innerHTML = Object.entries(counts).map(([m,c])=>`
+      <div class="chart-bar-row" style="margin-bottom:10px">
+        <div class="chart-bar-label" style="text-align:left;width:60px;text-transform:capitalize">${m}</div>
+        <div class="chart-bar-track"><div class="chart-bar-fill" data-w="${Math.round(c/total*100)}%"></div></div>
+        <div class="chart-bar-val">${c}</div>
+      </div>`).join('');
+    setTimeout(()=>{ mb.querySelectorAll('.chart-bar-fill').forEach(f=>f.style.width=f.dataset.w); },100);
+  }
+
+  // Timeline
+  const tl = document.getElementById('regTimeline');
+  if(tl){
+    if(users.length===0){ tl.innerHTML='<div class="empty"><p>No data yet</p></div>'; }
+    else {
+      const byDate = {};
+      users.forEach(u=>{ const d=u.createdAt?.slice(0,10)||'Unknown'; byDate[d]=(byDate[d]||0)+1; });
+      tl.innerHTML = Object.entries(byDate).slice(-7).map(([d,n])=>`
+        <div class="chart-bar-row" style="margin-bottom:8px">
+          <div class="chart-bar-label" style="font-size:.7rem;width:80px">${d}</div>
+          <div class="chart-bar-track"><div class="chart-bar-fill" data-w="${Math.min(n*20,100)}%"></div></div>
+          <div class="chart-bar-val">${n}</div>
+        </div>`).join('');
+      setTimeout(()=>{ tl.querySelectorAll('.chart-bar-fill').forEach(f=>f.style.width=f.dataset.w); },100);
+    }
+  }
+
+  // Quick stats
+  const qs = document.getElementById('quickStats');
+  if(qs){
+    const emailCount  = users.filter(u=>u.method==='email').length;
+    const phoneCount  = users.filter(u=>u.method==='phone').length;
+    const googleCount = users.filter(u=>u.method==='google').length;
+    qs.innerHTML = [
+      ['Total Users', users.length, 'green'],
+      ['Email Signups', emailCount, 'blue'],
+      ['Phone Signups', phoneCount, 'yellow'],
+      ['Google Signups', googleCount, 'gray'],
+    ].map(([l,v,c])=>`
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--bs)">
+        <span style="font-size:.82rem;color:var(--tm)">${l}</span>
+        <span class="badge ${c}">${v}</span>
+      </div>`).join('');
+  }
+
+  // Full table
+  const tbody = document.getElementById('analyticsTbody');
+  if(tbody){
+    if(users.length===0){
+      tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--tm);padding:24px">No users yet</td></tr>';
+    } else {
+      tbody.innerHTML = users.map((u,i)=>`
+        <tr>
+          <td class="td-bold">${i+1}</td>
+          <td>${u.firstName} ${u.lastName}</td>
+          <td>${u.email||u.phone||'—'}</td>
+          <td>${methodBadge(u.method)}</td>
+          <td>${fmtDate(u.createdAt)}</td>
+        </tr>`).join('');
+    }
+  }
+}
+
+/* ══════════════════════════════════════
+   MODALS
+══════════════════════════════════════ */
+function openModal(id){ document.getElementById(id).classList.add('open'); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); }));
+
+/* ══════════════════════════════════════
+   TOAST
+══════════════════════════════════════ */
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.style.display = 'flex';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ t.style.display='none'; }, 3200);
+}
+
+/* ══════════════════════════════════════
+   CONTENT SAVE
+══════════════════════════════════════ */
+function saveContent(){ showToast('Content settings saved! (Connect a backend to persist these.)'); }
+
+/* ══════════════════════════════════════
+   MISC
+══════════════════════════════════════ */
+function copyFormLink(){
+  navigator.clipboard.writeText('https://docs.google.com/forms/d/e/1FAIpQLScu3TdtbRWjVq7Zvr9dYx7VO1sENXJidSBub2mKws3Nh28nWQ/viewform')
+    .then(()=>showToast('Form link copied!'))
+    .catch(()=>showToast('Copy failed — please copy manually.'));
+}
+function logout(){
+  localStorage.removeItem('dns_session');
+  window.location.href = 'login.html';
+}
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+renderAll();
+</script>
+</body>
+</html>
