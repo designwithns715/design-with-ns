@@ -435,6 +435,42 @@ footer{background:#020a1a;padding:28px 48px}
 }
 
 /* ═══════════════════════════════════════════
+   WHATSAPP FAB
+═══════════════════════════════════════════ */
+.whatsapp-fab{
+  position:fixed;right:24px;bottom:24px;z-index:250;
+  width:58px;height:58px;border-radius:50%;
+  background:#25D366;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 24px rgba(37,211,102,.45),0 2px 8px rgba(0,0,0,.25);
+  transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s ease;
+  animation:waFabIn .5s .6s both;
+}
+.whatsapp-fab svg{width:30px;height:30px;fill:#ffffff}
+.whatsapp-fab:hover{
+  transform:translateY(-4px) scale(1.08);
+  box-shadow:0 10px 32px rgba(37,211,102,.6),0 4px 12px rgba(0,0,0,.3);
+}
+.whatsapp-fab:active{transform:translateY(-1px) scale(1.02)}
+.whatsapp-fab::before{
+  content:'';position:absolute;inset:0;border-radius:50%;
+  background:#25D366;opacity:.55;
+  animation:waPulse 2.4s ease-out infinite;
+  z-index:-1;
+}
+@keyframes waPulse{
+  0%{transform:scale(1);opacity:.55}
+  100%{transform:scale(1.7);opacity:0}
+}
+@keyframes waFabIn{
+  from{opacity:0;transform:translateY(16px) scale(.7)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@media(max-width:768px){
+  .whatsapp-fab{right:16px;bottom:16px;width:52px;height:52px}
+  .whatsapp-fab svg{width:26px;height:26px}
+}
+
+/* ═══════════════════════════════════════════
    RESPONSIVE — TABLET ≤1024px
 ═══════════════════════════════════════════ */
 @media(max-width:1024px){
@@ -853,6 +889,12 @@ footer{background:#020a1a;padding:28px 48px}
     </div>
   </div>
 </footer>
+
+<!-- ════════════ WHATSAPP FAB ════════════ -->
+<a href="https://wa.me/919443128360?text=Hi%20Design%20With%20NS%2C%20I%27d%20like%20to%20know%20more%20about%20your%20services."
+   target="_blank" rel="noopener" class="whatsapp-fab" aria-label="Chat with us on WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16.001 3C9.096 3 3.5 8.596 3.5 15.5c0 2.36.653 4.566 1.786 6.452L3 29l7.213-2.243A12.42 12.42 0 0 0 16.001 28C22.906 28 28.5 22.404 28.5 15.5S22.906 3 16.001 3zm0 22.688a10.13 10.13 0 0 1-5.166-1.417l-.37-.22-3.83 1.192 1.22-3.727-.242-.383a10.13 10.13 0 0 1-1.613-5.433c0-5.615 4.573-10.188 10.188-10.188 5.615 0 10.188 4.573 10.188 10.188s-4.573 9.988-10.188 9.988zm5.579-7.62c-.306-.153-1.81-.893-2.09-.994-.28-.102-.484-.153-.688.153-.204.306-.79.994-.968 1.198-.178.204-.357.23-.663.077-.306-.153-1.293-.477-2.463-1.52-.911-.812-1.526-1.815-1.705-2.121-.178-.306-.019-.472.134-.624.138-.137.306-.357.459-.535.153-.178.204-.306.306-.51.102-.204.051-.383-.026-.535-.077-.153-.688-1.658-.943-2.271-.248-.596-.5-.516-.688-.526-.178-.009-.382-.011-.586-.011-.204 0-.535.077-.815.383-.28.306-1.068 1.044-1.068 2.548 0 1.504 1.093 2.958 1.245 3.163.153.204 2.15 3.283 5.208 4.604.727.314 1.294.501 1.737.641.73.232 1.393.199 1.918.121.585-.087 1.81-.74 2.065-1.454.255-.714.255-1.325.178-1.454-.076-.128-.28-.204-.586-.357z"/></svg>
+</a>
 
 <script>
 /* ── Theme ── */
