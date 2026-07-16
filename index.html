@@ -203,7 +203,7 @@ section{padding:96px 48px;transition:var(--tt)}
 ═══════════════════════════════════════════ */
 #services{background:var(--bg-section)}
 .services-wrap{max-width:1160px;margin:0 auto}
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:26px}
 .service-card{
   border:1.5px solid var(--border-soft);border-radius:14px;
   padding:36px 30px;background:var(--bg-card);
@@ -547,7 +547,6 @@ footer{background:#020a1a;padding:28px 48px}
 
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
-    <li><a href="#trends">Trends</a></li>
     <li><a href="#resume">Resume</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#quote">Contact</a></li>
@@ -575,7 +574,6 @@ footer{background:#020a1a;padding:28px 48px}
 <!-- Mobile Drawer -->
 <div class="mobile-nav" id="mobileNav">
   <a href="#services" class="mob-link">Services</a>
-  <a href="#trends" class="mob-link">Trends</a>
   <a href="#resume" class="mob-link">Resume</a>
   <a href="#about" class="mob-link">About</a>
   <a href="#quote" class="mob-link">Contact</a>
@@ -651,6 +649,19 @@ footer{background:#020a1a;padding:28px 48px}
           <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Business Cards</li>
           <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Company Brochures</li>
           <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Flyers and Posters</li>
+        </ul>
+      </div>
+
+      <div class="service-card reveal">
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="6" height="6"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+        </div>
+        <h3>AI Automation</h3>
+        <ul class="service-list">
+          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Customer Support Chatbots</li>
+          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Proposal &amp; Contract Automation</li>
+          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Content &amp; Document Processing</li>
+          <li><span class="li-arr"><svg viewBox="0 0 6 6"><polygon points="0,0 6,3 0,6"/></svg></span>Automated Follow-up Systems</li>
         </ul>
       </div>
 
